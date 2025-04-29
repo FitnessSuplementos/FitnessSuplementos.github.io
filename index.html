@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness y Suplementos - Recomendaciones</title>
+    <style>
+        /* Estilos modernos para tienda de fitness */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: #343a40;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #fdbb2d;
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .category-title {
+            text-align: center;
+            margin: 50px 0 30px;
+            font-size: 2.2rem;
+            color: #1a2a6c;
+            position: relative;
+        }
+        
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #b21f1f;
+            margin: 15px auto 0;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0 50px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .product-image-container {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #1a2a6c;
+        }
+        
+        .product-brand {
+            color: #b21f1f;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+        
+        .product-features {
+            margin-bottom: 20px;
+        }
+        
+        .product-features li {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            list-style-position: inside;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, #b21f1f, #fdbb2d);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: auto;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(178, 31, 31, 0.4);
+        }
+        
+        .disclaimer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 30px 0;
+            font-size: 0.9rem;
+            border-left: 4px solid #b21f1f;
+        }
+        
+        footer {
+            background: #343a40;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: #fdbb2d;
+        }
+        
+        .affiliate-disclosure {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                height: 300px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .products {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Fitness & Suplementos</div>
+            <p class="tagline">Las mejores recomendaciones para tu entrenamiento</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#proteina">Proteínas</a></li>
+                <li><a href="#suplementos">Suplementos</a></li>
+                <li><a href="#equipo">Equipo</a></li>
+                <li><a href="#accesorios">Accesorios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Transforma tu cuerpo con los mejores productos</h1>
+            <p>Selección de artículos de fitness y suplementos recomendados por expertos</p>
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="disclaimer">
+            <strong>Nota:</strong> Este sitio contiene enlaces de afiliado a Amazon. Como asociado de Amazon, gano por compras calificadas sin costo adicional para ti. Todas las recomendaciones se basan en investigación y experiencia personal.
+        </div>
+        
+        <section id="proteina">
+            <h2 class="category-title">Proteínas y Ganadores</h2>
+            <div class="products">
+                <!-- Producto 1 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71kT7Gf0nIL._AC_SL1500_.jpg" alt="Proteína en polvo" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Proteína Whey Premium</h3>
+                        <p class="product-brand">Marca: Optimum Nutrition</p>
+                        <p class="product-description">Proteína de suero de leche de alta calidad con bajo contenido de lactosa y excelente perfil de aminoácidos.</p>
+                        <ul class="product-features">
+                            <li>24g de proteína por servicio</li>
+                            <li>5.5g de BCAA naturales</li>
+                            <li>Disponible en varios sabores</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B002DYIZH6?tag=TUCODIGO-20" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 2 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71k9WmG3qVL._AC_SL1500_.jpg" alt="Proteína vegetal" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Proteína Vegana Orgánica</h3>
+                        <p class="product-brand">Marca: Orgain</p>
+                        <p class="product-description">Mezcla de proteína vegetal orgánica sin lácteos, soja ni gluten, perfecta para dietas veganas.</p>
+                        <ul class="product-features">
+                            <li>21g de proteína vegetal</li>
+                            <li>Sin ingredientes artificiales</li>
+                            <li>Fuente de fibra y hierro</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B00D3L7M0U?tag=TUCODIGO-20" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 3 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71+5xYJRGaL._AC_SL1500_.jpg" alt="Ganador de peso" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Ganador de Peso Serious Mass</h3>
+                        <p class="product-brand">Marca: Optimum Nutrition</p>
+                        <p class="product-description">Suplemento de ganancia de peso con proteínas, carbohidratos y vitaminas para aumentar masa muscular.</p>
+                        <ul class="product-features">
+                            <li>1,250 calorías por porción</li>
+                            <li>50g de proteína</li>
+                            <li>Incluye creatina y glutamina</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B000GIQSU8?tag=TUCODIGO-20" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="suplementos">
+            <h2 class="category-title">Suplementos Deportivos</h2>
+            <div class="products">
+                <!-- Producto 1 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71w1J0G-5BL._AC_SL1500_.jpg" alt="Creatina Monohidrato" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Creatina Monohidrato</h3>
+                        <p class="product-brand">Marca: MuscleTech</p>
+                        <p class="product-description">Suplemento de creatina micronizada para aumentar fuerza, potencia y masa muscular magra.</p>
+                        <ul class="product-features">
+                            <li>100% creatina monohidrato</li>
+                            <li>Mejora el rendimiento en entrenamientos</li>
+                            <li>Aumenta la capacidad de recuperación</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B0013OUL64?tag=TUCODIGO-20" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 2 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71W6v3+ZQQL._AC_SL1500_.jpg" alt="BCAA en polvo" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">BCAA 2:1:1 en Polvo</h3>
+                        <p class="product-brand">Marca: Scivation</p>
+                        <p class="product-description">Aminoácidos de cadena ramificada para reducir la fatiga muscular y mejorar la recuperación.</p>
+                        <ul class="product-features">
+                            <li>Relación 2:1:1 de leucina, isoleucina y valina</li>
+                            <li>Sin colorantes artificiales</li>
+                            <li>Disponible en varios sabores</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B0013OXD7O?tag=TUCODIGO-20" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 3 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71VQ9+1x4CL._AC_SL1500_.jpg" alt="Pre-entreno" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Pre-Entreno Performance</h3>
+                        <p class="product-brand">Marca: C4</p>
+                        <p class="product-description">Fórmula avanzada de pre-entrenamiento para energía, enfoque y bombeo muscular.</p>
+                        <ul class="product-features">
+                            <li>Contiene beta-alanina y creatina</li>
+                            <li>Mejora el rendimiento atlético</li>
+                            <li>Energía sostenida sin choque</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B00JZFLK7E?tag=TUCODIGO-20" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="equipo">
+            <h2 class="category-title">Equipo de Entrenamiento</h2>
+            <div class="products">
+                <!-- Producto 1 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71YqyivQ0KL._AC_SL1500_.jpg" alt="Mancuernas ajustables" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Mancuernas Ajustables</h3>
+                        <p class="product-brand">Marca: Bowflex</p>
+                        <p class="product-description">Mancuernas ajustables de 5 a 52.5 libras que reemplazan 15 pares de mancuernas tradicionales.</p>
+                        <ul class="product-features">
+                            <li>Ahorra espacio y dinero</li>
+                            <li>Sistema de cambio rápido</li>
+                            <li>Base de almacenamiento incluida</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B001ARYU58?tag=TUCODIGO-20" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 2 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71UwSX5G4VL._AC_SL1500_.jpg" alt="Bandas de resistencia" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Set de Bandas de Resistencia</h3>
+                        <p class="product-brand">Marca: Fit Simplify</p>
+                        <p class="product-description">Juego de 5 bandas de resistencia con diferentes niveles para entrenamiento en casa o gimnasio.</p>
+                        <ul class="product-features">
+                            <li>Incluye accesorios y bolsa de transporte</li>
+                            <li>Material de látex natural duradero</li>
+                            <li>Manual de ejercicios incluido</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B01AVDVHTI?tag=TUCODIGO-20" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 3 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71+U6cUfXLL._AC_SL1500_.jpg" alt="Barra para dominadas" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Barra para Dominadas en Puerta</h3>
+                        <p class="product-brand">Marca: Perfect Fitness</p>
+                        <p class="product-description">Barra de dominadas que se instala sin herramientas en cualquier marco de puerta estándar.</p>
+                        <ul class="product-features">
+                            <li>Soporta hasta 300 libras</li>
+                            <li>Ajustable para diferentes anchos</li>
+                            <li>Empuñaduras cómodas</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B001EJMS6K?tag=TUCODIGO-20" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contacto" style="margin-bottom: 50px;">
+            <h2 class="category-title">Contacto</h2>
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <p style="margin-bottom: 20px; text-align: center;">¿Tienes preguntas sobre nuestros productos recomendados? Contáctanos:</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <h3 style="color: #1a2a6c; margin-bottom: 15px;">Información de Contacto</h3>
+                        <ul style="list-style: none;">
+                            <li style="margin-bottom: 10px; display: flex; align-items: center;">
+                                <span style="margin-right: 10px; color: #b21f1f;">✉️</span> contacto@fitnessysuplementos.com
+                            </li>
+                            <li style="margin-bottom: 10px; display: flex; align-items: center;">
+                                <span style="margin-right: 10px; color: #b21f1f;">📱</span> @fitnessysuplementos (Instagram)
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #1a2a6c; margin-bottom: 15px;">Envíanos un Mensaje</h3>
+                        <form>
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Nombre:</label>
+                                <input type="text" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Email:</label>
+                                <input type="email" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Mensaje:</label>
+                                <textarea style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; height: 100px;"></textarea>
+                            </div>
+                            <button type="submit" class="btn" style="width: 100%;">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#proteina">Proteínas</a>
+                <a href="#suplementos">Suplementos</a>
+                <a href="#equipo">Equipo</a>
+                <a href="#accesorios">Accesorios</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <p style="margin: 20px 0;">&copy; 2023 Fitness y Suplementos - Todos los derechos reservados</p>
+            <p class="affiliate-disclosure">
+                Este sitio participa en el Programa de Afiliados de Amazon, un programa de publicidad de afiliados diseñado para proporcionar un medio para que los sitios web obtengan tarifas de publicidad mediante anuncios y enlaces a amazon.com.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
