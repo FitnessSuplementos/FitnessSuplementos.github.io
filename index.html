@@ -302,6 +302,55 @@
                 height: 250px;
             }
         }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .contact-info, .contact-form {
+            flex: 1 1 100%; /* Por defecto, ocupan el 100% del ancho */
+        }
+
+        .contact-info h3, .contact-form h3 {
+            color: #1a2a6c;
+            margin-bottom: 15px;
+        }
+
+        .contact-info ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .contact-info ul li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-form form div {
+            margin-bottom: 15px;
+        }
+
+        .contact-form form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .contact-form form input, .contact-form form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        @media (min-width: 768px) {
+            .contact-info, .contact-form {
+                flex: 1; /* En pantallas grandes, ocupan el mismo espacio */
+            }
+        }
     </style>
 </head>
 <body>
@@ -517,34 +566,30 @@
             <h2 class="category-title">Contacto</h2>
             <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
                 <p style="margin-bottom: 20px; text-align: center;">¿Tienes preguntas sobre nuestros productos recomendados? Contáctanos:</p>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-                    <div>
-                        <h3 style="color: #1a2a6c; margin-bottom: 15px;">Información de Contacto</h3>
-                        <ul style="list-style: none;">
-                            <li style="margin-bottom: 10px; display: flex; align-items: center;">
-                                <span style="margin-right: 10px; color: #b21f1f;">✉️</span> contacto@fitnessysuplementos.com
-                            </li>
-                            <li style="margin-bottom: 10px; display: flex; align-items: center;">
-                                <span style="margin-right: 10px; color: #b21f1f;">📱</span> @fitnessysuplementos (Instagram)
-                            </li>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3>Información de Contacto</h3>
+                        <ul>
+                            <li>✉️ contacto@fitnessysuplementos.com</li>
+                            <li>📱 @fitnessysuplementos (Instagram)</li>
                         </ul>
                     </div>
-                    <div>
-                        <h3 style="color: #1a2a6c; margin-bottom: 15px;">Envíanos un Mensaje</h3>
+                    <div class="contact-form">
+                        <h3>Envíanos un Mensaje</h3>
                         <form>
-                            <div style="margin-bottom: 15px;">
-                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Nombre:</label>
-                                <input type="text" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                            <div>
+                                <label>Nombre:</label>
+                                <input type="text">
                             </div>
-                            <div style="margin-bottom: 15px;">
-                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Email:</label>
-                                <input type="email" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                            <div>
+                                <label>Email:</label>
+                                <input type="email">
                             </div>
-                            <div style="margin-bottom: 15px;">
-                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Mensaje:</label>
-                                <textarea style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; height: 100px;"></textarea>
+                            <div>
+                                <label>Mensaje:</label>
+                                <textarea></textarea>
                             </div>
-                            <button type="submit" class="btn" style="width: 100%;">Enviar Mensaje</button>
+                            <button type="submit" class="btn">Enviar Mensaje</button>
                         </form>
                     </div>
                 </div>
