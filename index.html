@@ -2,10 +2,20 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Fitness y Suplementos - Recomendaciones</title>
     <style>
-        /* Estilos modernos para tienda de fitness */
+        /* Variables y estilos base */
+        :root {
+            --primary-color: #1a2a6c;
+            --secondary-color: #b21f1f;
+            --accent-color: #fdbb2d;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+            --container-padding: 15px;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -14,38 +24,43 @@
         }
         
         body {
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: var(--light-bg);
+            color: var(--text-color);
             line-height: 1.6;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
+            overflow-x: hidden;
         }
         
         .container {
+            width: 100%;
+            padding: 0 var(--container-padding);
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+        }
+        
+        /* Encabezado */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
         }
         
         .logo {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             margin-bottom: 10px;
             font-weight: 800;
         }
         
         .tagline {
-            font-size: 1.2rem;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             opacity: 0.9;
+            padding: 0 10px;
         }
         
+        /* Navegación */
         nav {
-            background-color: #343a40;
-            padding: 15px 0;
+            background-color: var(--dark-bg);
+            padding: 10px 0;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -56,27 +71,29 @@
             justify-content: center;
             list-style: none;
             flex-wrap: wrap;
+            padding: 5px 0;
         }
         
         nav ul li {
-            margin: 0 15px;
+            margin: 5px 10px;
         }
         
         nav ul li a {
             color: white;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
             transition: color 0.3s;
         }
         
         nav ul li a:hover {
-            color: #fdbb2d;
+            color: var(--accent-color);
         }
         
+        /* Hero section */
         .hero {
             background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-            height: 400px;
+            height: clamp(250px, 50vh, 400px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -103,20 +120,22 @@
         }
         
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            margin-bottom: 15px;
+            line-height: 1.3;
         }
         
         .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 20px;
         }
         
+        /* Secciones de productos */
         .category-title {
             text-align: center;
-            margin: 50px 0 30px;
-            font-size: 2.2rem;
-            color: #1a2a6c;
+            margin: clamp(30px, 5vw, 50px) 0 clamp(20px, 3vw, 30px);
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            color: var(--primary-color);
             position: relative;
         }
         
@@ -125,15 +144,15 @@
             display: block;
             width: 100px;
             height: 4px;
-            background: #b21f1f;
+            background: var(--secondary-color);
             margin: 15px auto 0;
         }
         
         .products {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 20px 0 50px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 20px 0 40px;
         }
         
         .product-card {
@@ -147,25 +166,23 @@
         }
         
         .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         
-        /* Ajustar el contenedor de las imágenes */
         .product-image-container {
             width: 100%;
-            height: 200px; /* Altura fija para centrar mejor */
+            height: 200px;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         
-        /* Hacer que las imágenes sean completamente responsivas */
         .product-image {
             width: auto;
-            height: 100%; /* Ajustar la altura al contenedor */
-            object-fit: cover; /* Ajustar la imagen para que llene el contenedor */
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.5s ease;
         }
         
@@ -174,45 +191,46 @@
         }
         
         .product-info {
-            padding: 20px;
+            padding: 15px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
         
         .product-title {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: #1a2a6c;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            margin-bottom: 8px;
+            color: var(--primary-color);
         }
         
         .product-brand {
-            color: #b21f1f;
+            color: var(--secondary-color);
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-size: 0.9rem;
         }
         
         .product-description {
             color: #666;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
+            margin-bottom: 15px;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
             flex-grow: 1;
         }
         
         .product-features {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
         }
         
         .product-features li {
             margin-bottom: 5px;
-            font-size: 0.9rem;
             list-style-position: inside;
         }
         
+        /* Botones */
         .btn {
             display: inline-block;
-            background: linear-gradient(to right, #b21f1f, #fdbb2d);
+            background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
             color: white;
             padding: 12px 25px;
             border-radius: 50px;
@@ -224,6 +242,7 @@
             cursor: pointer;
             font-size: 1rem;
             margin-top: auto;
+            width: 100%;
         }
         
         .btn:hover {
@@ -231,37 +250,182 @@
             box-shadow: 0 5px 15px rgba(178, 31, 31, 0.4);
         }
         
+        /* Disclaimer */
         .disclaimer {
             background-color: #f1f1f1;
-            padding: 20px;
+            padding: 15px;
             border-radius: 5px;
-            margin: 30px 0;
-            font-size: 0.9rem;
-            border-left: 4px solid #b21f1f;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            border-left: 4px solid var(--secondary-color);
         }
         
+        /* Calculadora */
+        .calculator-section {
+            padding: 30px 0;
+            background: var(--light-bg);
+        }
+        
+        .calculator-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .calculator-form, .calculator-results {
+            width: 100%;
+        }
+        
+        .calculator-input {
+            margin-bottom: 15px;
+        }
+        
+        .calculator-input label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .calculator-input input,
+        .calculator-input select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .results-grid {
+            display: grid;
+            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+        
+        .result-item {
+            background: var(--light-bg);
+            padding: 12px;
+            border-radius: 8px;
+        }
+        
+        .result-item h4 {
+            color: var(--secondary-color);
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .result-item p {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        #extra-results {
+            display: none;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        #extra-results .results-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+        
+        #show-more-button {
+            margin-top: 15px;
+            padding: 12px;
+            width: 100%;
+        }
+        
+        /* Contacto */
+        .contact-section {
+            margin-bottom: 30px;
+        }
+        
+        .contact-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .contact-info, .contact-form {
+            margin-bottom: 20px;
+        }
+        
+        .contact-info h3, .contact-form h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .contact-info ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .contact-info ul li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+        
+        .contact-form form div {
+            margin-bottom: 15px;
+        }
+        
+        .contact-form form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .contact-form form input,
+        .contact-form form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .contact-form form textarea {
+            min-height: 100px;
+        }
+        
+        /* Footer */
         footer {
-            background: #343a40;
+            background: var(--dark-bg);
             color: white;
             text-align: center;
-            padding: 3rem 0;
+            padding: 2rem 0;
             margin-top: 2rem;
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
             margin-bottom: 20px;
         }
         
         .footer-links a {
             color: white;
-            margin: 0 15px;
+            margin: 0 10px 10px;
             text-decoration: none;
+            font-size: 0.9rem;
         }
         
         .footer-links a:hover {
-            color: #fdbb2d;
+            color: var(--accent-color);
+        }
+        
+        footer p {
+            margin: 15px 0;
+            font-size: 0.9rem;
         }
         
         .affiliate-disclosure {
@@ -269,162 +433,69 @@
             opacity: 0.8;
             max-width: 800px;
             margin: 0 auto;
+            padding: 0 15px;
+            text-align: center;
         }
         
-        @media (max-width: 768px) {
+        /* Media queries para ajustes específicos */
+        @media (min-width: 768px) {
+            .calculator-container {
+                flex-direction: row;
+                padding: 30px;
+                gap: 30px;
+            }
+            
+            .calculator-form, .calculator-results {
+                flex: 1;
+            }
+            
+            .contact-container {
+                display: flex;
+                gap: 30px;
+                padding: 30px;
+            }
+            
+            .contact-info, .contact-form {
+                flex: 1;
+                margin-bottom: 0;
+            }
+            
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 30px;
+            }
+            
+            .product-info {
+                padding: 20px;
+            }
+            
+            .disclaimer {
+                padding: 20px;
+                margin: 30px 0;
+            }
+            
             .hero {
-                height: 300px;
+                height: 400px;
             }
             
             .hero h1 {
-                font-size: 2rem;
+                margin-bottom: 20px;
             }
             
-            nav ul li {
-                margin: 5px 10px;
-            }
-            
-            .products {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            .hero p {
+                margin-bottom: 30px;
             }
         }
         
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 2rem;
+        @media (min-width: 992px) {
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .products {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero {
-                height: 250px;
+            #extra-results .results-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
-
-        .contact-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-
-        .contact-info, .contact-form {
-            flex: 1 1 100%; /* Por defecto, ocupan el 100% del ancho */
-        }
-
-        .contact-info h3, .contact-form h3 {
-            color: #1a2a6c;
-            margin-bottom: 15px;
-        }
-
-        .contact-info ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .contact-info ul li {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-
-        .contact-form form div {
-            margin-bottom: 15px;
-        }
-
-        .contact-form form label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .contact-form form input, .contact-form form textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        @media (min-width: 768px) {
-            .contact-info, .contact-form {
-                flex: 1; /* En pantallas grandes, ocupan el mismo espacio */
-            }
-        }
-
-        /* Estilos personalizados para los sliders */
-        .slider {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 10px;
-            border-radius: 5px;
-            background: #ddd;
-            outline: none;
-            margin: 15px 0;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #b21f1f;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .slider::-webkit-slider-thumb:hover {
-            background: #8a1818;
-        }
-
-        .slider::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #b21f1f;
-            cursor: pointer;
-        }
-
-        .calculator-input label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #1a2a6c;
-        }
-
-        #results h3 {
-            border-bottom: 2px solid #fdbb2d;
-            padding-bottom: 10px;
-        }
-
-        /* Responsividad para pantallas pequeñas */
-        @media (max-width: 768px) {
-            .calculator-wrapper {
-                flex-direction: column; /* Apilar contenedores en pantallas pequeñas */
-            }
-
-            .calculator-form, .calculator-results {
-                flex: 1 1 100%; /* Ambos contenedores ocupan el 100% del ancho */
-            }
-        }
-
-        /* Estilo para los resultados adicionales */
-        #extra-results {
-            display: none; /* Ocultos inicialmente */
-            grid-template-columns: repeat(2, 250px); /* Diseño de cuadrícula */
-            gap: 15px; /* Espaciado entre elementos */
-            
-        }
-
-        @media (max-width: 768px) {
-    #extra-results {
-        display: grid; /* Mostrar como cuadrícula en pantallas pequeñas */
-        grid-template-columns: repeat(1, 280px);
-    }
-}
-
     </style>
 </head>
 <body>
@@ -637,100 +708,151 @@
             </div>
         </section>
         
-        <section id="calculator" style="padding: 50px 0; background: #f8f9fa;">
+        <section id="calculator" class="calculator-section">
             <div class="container">
                 <h2 class="category-title">Calculadora de Pesos Recomendados para Hipertrofia</h2>
-                <div class="calculator-container" style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; gap: 30px; flex-wrap: wrap;">
+                <div class="calculator-container">
                     <!-- Formulario -->
-                    <div class="calculator-form" style="flex: 1 1 45%; min-width: 300px;">
+                    <div class="calculator-form">
                         <div class="calculator-input">
                             <label for="gender-select">Género:</label>
-                            <select id="gender-select" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                            <select id="gender-select">
                                 <option value="male">Hombre</option>
                                 <option value="female">Mujer</option>
                             </select>
                         </div>
                         <div class="calculator-input">
                             <label for="weight-input">Peso Corporal (kg):</label>
-                            <input type="number" id="weight-input" value="70" min="40" max="150" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                            <input type="number" id="weight-input" value="70" min="40" max="150">
                         </div>
                         <div class="calculator-input">
                             <label for="height-input">Estatura (cm):</label>
-                            <input type="number" id="height-input" value="170" min="140" max="210" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                            <input type="number" id="height-input" value="170" min="140" max="210">
                         </div>
                         <div class="calculator-input">
                             <label for="experience-select">Nivel de Experiencia:</label>
-                            <select id="experience-select" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                            <select id="experience-select">
                                 <option value="beginner">Principiante (0-6 meses)</option>
                                 <option value="intermediate">Intermedio (6-24 meses)</option>
                                 <option value="advanced">Avanzado (2+ años)</option>
                             </select>
                         </div>
-                        <button id="calculate-button" class="btn" style="width: 100%; margin-top: 20px;">Calcular</button>
+                        <button id="calculate-button" class="btn">Calcular</button>
                     </div>
         
                     <!-- Resultados -->
-                    <div class="calculator-results" id="results" style="flex: 1 1 45%; min-width: 300px;">
-                        <h3 style="color: #1a2a6c; margin-bottom: 15px;">Pesos Recomendados para Hipertrofia:</h3>
-                        <div class="results-grid" style="display: grid; gap: 15px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-                            <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                <h4 style="color: #b21f1f;">Sentadilla</h4>
-                                <p id="squat-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                    <div class="calculator-results" id="results">
+                        <h3>Pesos Recomendados para Hipertrofia:</h3>
+                        <div class="results-grid">
+                            <div class="result-item">
+                                <h4>Sentadilla</h4>
+                                <p id="squat-weight">-</p>
                             </div>
-                            <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                <h4 style="color: #b21f1f;">Press Banca</h4>
-                                <p id="bench-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                            <div class="result-item">
+                                <h4>Press Banca</h4>
+                                <p id="bench-weight">-</p>
                             </div>
-                            <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                <h4 style="color: #b21f1f;">Peso Muerto</h4>
-                                <p id="deadlift-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                            <div class="result-item">
+                                <h4>Peso Muerto</h4>
+                                <p id="deadlift-weight">-</p>
                             </div>
-                            <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                <h4 style="color: #b21f1f;">Press Militar</h4>
-                                <p id="military-press-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                            <div class="result-item">
+                                <h4>Press Militar</h4>
+                                <p id="military-press-weight">-</p>
                             </div>
+                        </div>
         
-                            <!-- Ejercicios adicionales ocultos inicialmente -->
-                            <div id="extra-results" style="display: none; width: 100%; grid-column: 1 / -1;">
-                                <div style="display: grid; gap: 15px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                        <h4 style="color: #b21f1f;">Curl Bíceps</h4>
-                                        <p id="biceps-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
-                                    </div>
-                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                        <h4 style="color: #b21f1f;">Extensión Tríceps</h4>
-                                        <p id="triceps-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
-                                    </div>
-                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                        <h4 style="color: #b21f1f;">Remo con Barra</h4>
-                                        <p id="back-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
-                                    </div>
-                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                        <h4 style="color: #b21f1f;">Dominadas</h4>
-                                        <p id="pullup-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
-                                    </div>
-                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                        <h4 style="color: #b21f1f;">Zancadas</h4>
-                                        <p id="lunge-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
-                                    </div>
-                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                        <h4 style="color: #b21f1f;">Peso para Plancha</h4>
-                                        <p id="plank-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
-                                    </div>
+                        <!-- Ejercicios adicionales ocultos inicialmente -->
+                        <div id="extra-results">
+                            <div class="results-grid">
+                                <div class="result-item">
+                                    <h4>Curl Bíceps</h4>
+                                    <p id="biceps-weight">-</p>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Extensión Tríceps</h4>
+                                    <p id="triceps-weight">-</p>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Remo con Barra</h4>
+                                    <p id="back-weight">-</p>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Dominadas</h4>
+                                    <p id="pullup-weight">-</p>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Zancadas</h4>
+                                    <p id="lunge-weight">-</p>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Peso para Plancha</h4>
+                                    <p id="plank-weight">-</p>
                                 </div>
                             </div>
                         </div>
         
                         <!-- Botón para mostrar más -->
-                        <div style="text-align: center; margin-top: 20px;">
-                            <button id="show-more-button" class="btn" style="padding: 10px 20px;">⬇ Mostrar más ejercicios</button>
+                        <div style="text-align: center;">
+                            <button id="show-more-button" class="btn">▼ Mostrar más ejercicios</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <script>
+        <section id="contacto" style="margin-bottom: 50px;">
+            <h2 class="category-title">Contacto</h2>
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <p style="margin-bottom: 20px; text-align: center;">¿Tienes preguntas sobre nuestros productos recomendados? Contáctanos:</p>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3>Información de Contacto</h3>
+                        <ul>
+                            <li>✉️ contacto@fitnessysuplementos.com</li>
+                            <li>📱 @fitnessysuplementos (Instagram)</li>
+                        </ul>
+                    </div>
+                    <div class="contact-form">
+                        <h3>Envíanos un Mensaje</h3>
+                        <form>
+                            <div>
+                                <label>Nombre:</label>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <label>Email:</label>
+                                <input type="email">
+                            </div>
+                            <div>
+                                <label>Mensaje:</label>
+                                <textarea></textarea>
+                            </div>
+                            <button type="submit" class="btn">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#proteina">Proteínas</a>
+                <a href="#suplementos">Suplementos</a>
+                <a href="#equipo">Equipo</a>
+                <a href="#calculator">Calculadora</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <p>&copy; 2023 Fitness y Suplementos - Todos los derechos reservados</p>
+            <p class="affiliate-disclosure">
+                Este sitio participa en el Programa de Afiliados de Amazon, un programa de publicidad de afiliados diseñado para proporcionar un medio para que los sitios web obtengan tarifas de publicidad mediante anuncios y enlaces a amazon.com.
+            </p>
+        </div>
+    </footer>
+
+    <script>
         // Factores de género (mujeres suelen levantar ~60-85% de lo que levantan hombres en promedio)
         const GENDER_FACTORS = {
             male: 1.0,
@@ -795,76 +917,32 @@
         };
         
         // Mostrar/ocultar ejercicios adicionales
-        document.getElementById('show-more-button').addEventListener('click', () => {
+        document.getElementById('show-more-button').addEventListener('click', function() {
             const extraResults = document.getElementById('extra-results');
             const button = document.getElementById('show-more-button');
-            if (extraResults.style.display === 'none') {
+            
+            if (extraResults.style.display === 'none' || !extraResults.style.display) {
                 extraResults.style.display = 'block';
-                button.textContent = '⬆ Mostrar menos';
+                button.textContent = '▲ Mostrar menos';
+                // Desplazamiento suave para móviles
+                extraResults.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } else {
                 extraResults.style.display = 'none';
-                button.textContent = '⬇ Mostrar más ejercicios';
+                button.textContent = '▼ Mostrar más ejercicios';
             }
         });
         
         // Calcular al cargar y al hacer clic
-        document.addEventListener('DOMContentLoaded', calculateWeights);
-        document.getElementById('calculate-button').addEventListener('click', calculateWeights);
-        </script>
-
-
-</script>
-
-        <section id="contacto" style="margin-bottom: 50px;">
-            <h2 class="category-title">Contacto</h2>
-            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                <p style="margin-bottom: 20px; text-align: center;">¿Tienes preguntas sobre nuestros productos recomendados? Contáctanos:</p>
-                <div class="contact-container">
-                    <div class="contact-info">
-                        <h3>Información de Contacto</h3>
-                        <ul>
-                            <li>✉️ contacto@fitnessysuplementos.com</li>
-                            <li>📱 @fitnessysuplementos (Instagram)</li>
-                        </ul>
-                    </div>
-                    <div class="contact-form">
-                        <h3>Envíanos un Mensaje</h3>
-                        <form>
-                            <div>
-                                <label>Nombre:</label>
-                                <input type="text">
-                            </div>
-                            <div>
-                                <label>Email:</label>
-                                <input type="email">
-                            </div>
-                            <div>
-                                <label>Mensaje:</label>
-                                <textarea></textarea>
-                            </div>
-                            <button type="submit" class="btn">Enviar Mensaje</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-    
-    <footer>
-        <div class="container">
-            <div class="footer-links">
-                <a href="#proteina">Proteínas</a>
-                <a href="#suplementos">Suplementos</a>
-                <a href="#equipo">Equipo</a>
-                <a href="#calculator">Calculadora</a>
-                <a href="#contacto">Contacto</a>
-            </div>
-            <p style="margin: 20px 0;">&copy; 2023 Fitness y Suplementos - Todos los derechos reservados</p>
-            <p class="affiliate-disclosure">
-                Este sitio participa en el Programa de Afiliados de Amazon, un programa de publicidad de afiliados diseñado para proporcionar un medio para que los sitios web obtengan tarifas de publicidad mediante anuncios y enlaces a amazon.com.
-            </p>
-        </div>
-    </footer>
-
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateWeights();
+            // Ocultar resultados adicionales al cargar
+            document.getElementById('extra-results').style.display = 'none';
+        });
+        
+        document.getElementById('calculate-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            calculateWeights();
+        });
+    </script>
 </body>
 </html>
