@@ -351,6 +351,80 @@
                 flex: 1; /* En pantallas grandes, ocupan el mismo espacio */
             }
         }
+
+        /* Estilos personalizados para los sliders */
+        .slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            margin: 15px 0;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #b21f1f;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            background: #8a1818;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #b21f1f;
+            cursor: pointer;
+        }
+
+        .calculator-input label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #1a2a6c;
+        }
+
+        #results h3 {
+            border-bottom: 2px solid #fdbb2d;
+            padding-bottom: 10px;
+        }
+
+        /* Responsividad para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .calculator-wrapper {
+                flex-direction: column; /* Apilar contenedores en pantallas pequeñas */
+            }
+
+            .calculator-form, .calculator-results {
+                flex: 1 1 100%; /* Ambos contenedores ocupan el 100% del ancho */
+            }
+        }
+
+        /* Estilo para los resultados adicionales */
+        #extra-results {
+            display: none; /* Ocultos inicialmente */
+            grid-template-columns: repeat(2, 250px); /* Diseño de cuadrícula */
+            gap: 15px; /* Espaciado entre elementos */
+            
+        }
+
+        @media (max-width: 768px) {
+    #extra-results {
+        display: grid; /* Mostrar como cuadrícula en pantallas pequeñas */
+        grid-template-columns: repeat(1, 280px);
+    }
+}
+
     </style>
 </head>
 <body>
@@ -367,7 +441,7 @@
                 <li><a href="#proteina">Proteínas</a></li>
                 <li><a href="#suplementos">Suplementos</a></li>
                 <li><a href="#equipo">Equipo</a></li>
-                <li><a href="#accesorios">Accesorios</a></li>
+                <li><a href="#calculator">Calculadora</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </div>
@@ -377,6 +451,7 @@
         <div class="hero-content">
             <h1>Transforma tu cuerpo con los mejores productos</h1>
             <p>Selección de artículos de fitness y suplementos recomendados por expertos</p>
+            <a href="#calculator" class="btn">Ir a la Calculadora</a>
         </div>
     </section>
     
@@ -562,6 +637,184 @@
             </div>
         </section>
         
+        <section id="calculator" style="padding: 50px 0; background: #f8f9fa;">
+            <div class="container">
+                <h2 class="category-title">Calculadora de Pesos Recomendados para Hipertrofia</h2>
+                <div class="calculator-container" style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; gap: 30px; flex-wrap: wrap;">
+                    <!-- Formulario -->
+                    <div class="calculator-form" style="flex: 1 1 45%; min-width: 300px;">
+                        <div class="calculator-input">
+                            <label for="gender-select">Género:</label>
+                            <select id="gender-select" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                                <option value="male">Hombre</option>
+                                <option value="female">Mujer</option>
+                            </select>
+                        </div>
+                        <div class="calculator-input">
+                            <label for="weight-input">Peso Corporal (kg):</label>
+                            <input type="number" id="weight-input" value="70" min="40" max="150" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                        </div>
+                        <div class="calculator-input">
+                            <label for="height-input">Estatura (cm):</label>
+                            <input type="number" id="height-input" value="170" min="140" max="210" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                        </div>
+                        <div class="calculator-input">
+                            <label for="experience-select">Nivel de Experiencia:</label>
+                            <select id="experience-select" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                                <option value="beginner">Principiante (0-6 meses)</option>
+                                <option value="intermediate">Intermedio (6-24 meses)</option>
+                                <option value="advanced">Avanzado (2+ años)</option>
+                            </select>
+                        </div>
+                        <button id="calculate-button" class="btn" style="width: 100%; margin-top: 20px;">Calcular</button>
+                    </div>
+        
+                    <!-- Resultados -->
+                    <div class="calculator-results" id="results" style="flex: 1 1 45%; min-width: 300px;">
+                        <h3 style="color: #1a2a6c; margin-bottom: 15px;">Pesos Recomendados para Hipertrofia:</h3>
+                        <div class="results-grid" style="display: grid; gap: 15px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                            <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                <h4 style="color: #b21f1f;">Sentadilla</h4>
+                                <p id="squat-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                            </div>
+                            <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                <h4 style="color: #b21f1f;">Press Banca</h4>
+                                <p id="bench-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                            </div>
+                            <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                <h4 style="color: #b21f1f;">Peso Muerto</h4>
+                                <p id="deadlift-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                            </div>
+                            <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                <h4 style="color: #b21f1f;">Press Militar</h4>
+                                <p id="military-press-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                            </div>
+        
+                            <!-- Ejercicios adicionales ocultos inicialmente -->
+                            <div id="extra-results" style="display: none; width: 100%; grid-column: 1 / -1;">
+                                <div style="display: grid; gap: 15px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                        <h4 style="color: #b21f1f;">Curl Bíceps</h4>
+                                        <p id="biceps-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                                    </div>
+                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                        <h4 style="color: #b21f1f;">Extensión Tríceps</h4>
+                                        <p id="triceps-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                                    </div>
+                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                        <h4 style="color: #b21f1f;">Remo con Barra</h4>
+                                        <p id="back-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                                    </div>
+                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                        <h4 style="color: #b21f1f;">Dominadas</h4>
+                                        <p id="pullup-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                                    </div>
+                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                        <h4 style="color: #b21f1f;">Zancadas</h4>
+                                        <p id="lunge-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                                    </div>
+                                    <div class="result-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                        <h4 style="color: #b21f1f;">Peso para Plancha</h4>
+                                        <p id="plank-weight" style="font-size: 1.4rem; font-weight: bold;">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <!-- Botón para mostrar más -->
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button id="show-more-button" class="btn" style="padding: 10px 20px;">⬇ Mostrar más ejercicios</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <script>
+        // Factores de género (mujeres suelen levantar ~60-85% de lo que levantan hombres en promedio)
+        const GENDER_FACTORS = {
+            male: 1.0,
+            female: 0.7  // Ajuste basado en diferencias de fuerza promedio
+        };
+        
+        // Factores de experiencia (rango de repeticiones para hipertrofia)
+        const EXPERIENCE_FACTORS = {
+            beginner: 0.8,   // 60-70% 1RM (8-12 repeticiones)
+            intermediate: 0.85, // 70-75% 1RM (6-10 repeticiones)
+            advanced: 0.9     // 75-80% 1RM (4-8 repeticiones)
+        };
+        
+        // Función para calcular pesos basados en estándares de fuerza por género
+        const calculateWeights = () => {
+            // Obtener valores
+            const gender = document.getElementById('gender-select').value;
+            const weight = parseFloat(document.getElementById('weight-input').value);
+            const height = parseFloat(document.getElementById('height-input').value);
+            const experience = document.getElementById('experience-select').value;
+            
+            // Factores de cálculo
+            const genderFactor = GENDER_FACTORS[gender];
+            const experienceFactor = EXPERIENCE_FACTORS[experience];
+            const heightFactor = height / 170; // Normalización para estatura
+            
+            // Rangos típicos de % de peso corporal para hipertrofia (ajustados por género)
+            const exercises = {
+                squat: { male: 1.2, female: 0.9 },       // Sentadilla (% peso corporal)
+                bench: { male: 0.9, female: 0.6 },        // Press banca
+                deadlift: { male: 1.5, female: 1.1 },     // Peso muerto
+                militaryPress: { male: 0.7, female: 0.5 },// Press militar
+                biceps: { male: 0.4, female: 0.3 },       // Curl bíceps
+                triceps: { male: 0.5, female: 0.35 },     // Extensión tríceps
+                back: { male: 0.8, female: 0.6 },         // Remo
+                pullup: { male: 0.7, female: 0.5 },       // Dominadas (peso asistido)
+                lunge: { male: 0.6, female: 0.45 },       // Zancadas
+                plank: { male: 0.3, female: 0.25 }        // Peso añadido en plancha
+            };
+            
+            // Calcular pesos para hipertrofia (8-12 repeticiones)
+            const getExerciseWeight = (exercise) => {
+                const base = weight * exercises[exercise][gender] * experienceFactor * heightFactor;
+                return Math.round(base / 2.5) * 2.5; // Redondear a múltiplos de 2.5kg
+            };
+            
+            // Actualizar UI
+            document.getElementById('squat-weight').textContent = `${getExerciseWeight('squat')} kg`;
+            document.getElementById('bench-weight').textContent = `${getExerciseWeight('bench')} kg`;
+            document.getElementById('deadlift-weight').textContent = `${getExerciseWeight('deadlift')} kg`;
+            document.getElementById('military-press-weight').textContent = `${getExerciseWeight('militaryPress')} kg`;
+            document.getElementById('biceps-weight').textContent = `${getExerciseWeight('biceps')} kg`;
+            document.getElementById('triceps-weight').textContent = `${getExerciseWeight('triceps')} kg`;
+            document.getElementById('back-weight').textContent = `${getExerciseWeight('back')} kg`;
+            document.getElementById('pullup-weight').textContent = gender === 'female' 
+                ? `Asistido: ${getExerciseWeight('pullup')} kg` 
+                : `${getExerciseWeight('pullup')} kg`;
+            document.getElementById('lunge-weight').textContent = `${getExerciseWeight('lunge')} kg`;
+            document.getElementById('plank-weight').textContent = gender === 'female'
+                ? `Peso corporal + ${getExerciseWeight('plank')} kg`
+                : `Peso corporal + ${getExerciseWeight('plank')} kg`;
+        };
+        
+        // Mostrar/ocultar ejercicios adicionales
+        document.getElementById('show-more-button').addEventListener('click', () => {
+            const extraResults = document.getElementById('extra-results');
+            const button = document.getElementById('show-more-button');
+            if (extraResults.style.display === 'none') {
+                extraResults.style.display = 'block';
+                button.textContent = '⬆ Mostrar menos';
+            } else {
+                extraResults.style.display = 'none';
+                button.textContent = '⬇ Mostrar más ejercicios';
+            }
+        });
+        
+        // Calcular al cargar y al hacer clic
+        document.addEventListener('DOMContentLoaded', calculateWeights);
+        document.getElementById('calculate-button').addEventListener('click', calculateWeights);
+        </script>
+
+
+</script>
+
         <section id="contacto" style="margin-bottom: 50px;">
             <h2 class="category-title">Contacto</h2>
             <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
@@ -603,7 +856,7 @@
                 <a href="#proteina">Proteínas</a>
                 <a href="#suplementos">Suplementos</a>
                 <a href="#equipo">Equipo</a>
-                <a href="#accesorios">Accesorios</a>
+                <a href="#calculator">Calculadora</a>
                 <a href="#contacto">Contacto</a>
             </div>
             <p style="margin: 20px 0;">&copy; 2023 Fitness y Suplementos - Todos los derechos reservados</p>
@@ -612,5 +865,6 @@
             </p>
         </div>
     </footer>
+
 </body>
 </html>
