@@ -1,60 +1,275 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-    <!-- Página principal - Máxima prioridad -->
-    <url>
-        <loc>https://fitnesssuplementos.github.io/</loc>
-        <lastmod>2025-05-20</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-
-    <!-- Categorías principales -->
-    <url>
-        <loc>https://fitnesssuplementos.github.io/proteinas</loc>
-        <lastmod>2025-05-20</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-    </url>
-
-    <url>
-        <loc>https://fitnesssuplementos.github.io/creatina</loc>
-        <lastmod>2025-05-20</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-    </url>
-
-    <!-- Productos destacados -->
-    <url>
-        <loc>https://fitnesssuplementos.github.io/optimum-nutrition-gold-standard</loc>
-        <lastmod>2025-05-20</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://fitnesssuplementos.github.io/muscletech-creatina-monohidrato</loc>
-        <lastmod>2025-05-20</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- Páginas informativas -->
-    <url>
-        <loc>https://fitnesssuplementos.github.io/guia-compras</loc>
-        <lastmod>2025-05-20</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://fitnesssuplementos.github.io/contacto</loc>
-        <lastmod>2025-05-20</lastmod>
-        <changefreq>yearly</changefreq>
-        <priority>0.5</priority>
-    </url>
-
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemalocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" _msthidden="1">
+<!--   Created by https://ettvi.com/xml-sitemap-generator   -->
+<font _mstmutation="1" _msttexthash="25896819442" _msthidden="1" _msthash="196">
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq> never </changefreq>
+<priority>1.00</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/login?return_to=https%3A%2F%2Fgithub.com%2FFitnessSuplementos%2FFitnessSuplementos.github.io</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/solutions/industry/nonprofits</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/solutions/use-case/devsecops</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/solutions/use-case/devops</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/solutions/use-case/ci-cd</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/solutions/use-case</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/solutions/industry/healthcare</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/solutions/industry/financial-services</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/solutions/industry/manufacturing</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/solutions/industry/government</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/solutions/industry</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/solutions</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/resources/articles/ai</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/resources/articles/devops</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/resources/articles/security</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/resources/articles/software-development</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/resources/articles</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/sponsors</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/enterprise</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/features/copilot/copilot-business</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/premium-support</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E&source=header-repo&source_repo=FitnessSuplementos%2FFitnessSuplementos.github.io</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/stargazers</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/forks</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/branches</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/tags</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/activity</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/issues</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/pulls</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/actions</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/projects</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/security</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/pulse</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/commits/main</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/blob/main/google414505cdf59830b1.html</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/blob/main/index.html</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/blob/main/sitemap.xml</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/watchers</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/contact/report-content?content_url=https%3A%2F%2Fgithub.com%2FFitnessSuplementos%2FFitnessSuplementos.github.io&report=FitnessSuplementos+%28user%29</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/releases</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/users/FitnessSuplementos/packages?repo_name=FitnessSuplementos.github.io</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+<url _mstmutation="1">
+<loc>https://github.com/FitnessSuplementos/FitnessSuplementos.github.io/FitnessSuplementos/FitnessSuplementos.github.io/search?l=html</loc>
+<lastmod>2025-05-02T19:13:14+00:00</lastmod>
+<changefreq>never</changefreq>
+<priority>0.64</priority>
+</url>
+</font>
 </urlset>
