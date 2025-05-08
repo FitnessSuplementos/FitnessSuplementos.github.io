@@ -1,19 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- Meta Descripción Optimizada para SEO y Conversiones -->
-    <meta name="description" content="Tienda especializada en suplementos deportivos y equipos de gym. Encuentra ganadores de peso, proteínas, creatina y más. Usa nuestra calculadora de hipertrofia para optimizar tus entrenamientos según tu peso, edad y experiencia. Productos verificados de Amazon con enlaces de afiliado.">
-    
-    <!-- Keywords (opcional pero recomendado) -->
-    <meta name="keywords" content="suplementos deportivos, ganadores de peso, proteínas, creatina, calculadora hipertrofia, equipo gym, fitness, musculación, entrenamiento">
-    
-    <!-- OpenGraph (para redes sociales) -->
-    <meta property="og:title" content="Fitness y Suplementos - Recomendaciones Profesionales">
-    <meta property="og:description" content="Los mejores suplementos y herramientas para tu entrenamiento. Calculadora de hipertrofia incluida.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fitnesssuplementos.github.io">
     <title>Fitness y Suplementos - Recomendaciones</title>
     <style>
         /* Variables y estilos base */
@@ -314,7 +303,7 @@
         .results-grid {
             display: grid;
             gap: 15px;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
         }
         
         .result-item {
@@ -341,7 +330,7 @@
         }
         
         #extra-results .results-grid {
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
         }
         
         #show-more-button {
@@ -510,6 +499,7 @@
     </style>
 </head>
 <body>
+    <script src="products.js"></script>
     <header>
         <div class="container">
             <div class="logo">Fitness & Suplementos</div>
@@ -520,10 +510,11 @@
     <nav>
         <div class="container">
             <ul>
+                <li><a href="#vitamina">vitaminas</a></li>
                 <li><a href="#proteina">Proteínas</a></li>
                 <li><a href="#suplementos">Suplementos</a></li>
                 <li><a href="#equipo">Equipo</a></li>
-                <li><a href="#calculator">Calculadora</a></li>
+                <li><a href="#Belleza">Belleza</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </div>
@@ -541,7 +532,60 @@
         <div class="disclaimer">
             <strong>Nota:</strong> Este sitio contiene enlaces de afiliado a Amazon. Como asociado de Amazon, gano por compras calificadas sin costo adicional para ti. Todas las recomendaciones se basan en investigación y experiencia personal.
         </div>
+        <section id="vitamina">
+            <h2 class="category-title">Vitaminas y Minerales</h2>
+            <div class="products">
+        <!-- Suplemento de inositol de alta calidad -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/61zL4rNGq-L.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="Suplemento de inositol de alta calidad" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Suplemento de inositol</h3>
+                <p class="product-brand">Marca: Optify</p>
+                <p class="product-description">mio-inositol e inositol D-Chiro más folato y vitamina D, relación ideal 40:1, equilibrio hormonal y apoyo ovárico saludable para mujeres, vitamina B8, suministro para 30 días</p>
+                <ul class="product-features">
+                    <li>Tipo de dieta Vegano</li>
+                    <li>Sabor Fruta.</li>
+                    <li>Hormona de fertilidad natural y apoyo menstrual</li>
+                </ul>
+                <a href="https://www.amazon.com/dp/B07W4FNSFF?social_share=cm_sw_r_cso_wa_apin_dp_H2NC95KBB5Y2XNDC4Z1E&previewDoh=1&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=9eaa3d27760c39a5f105bc3ade13c9c0&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+            </div>
+        </div><!-- Magnesio (glicinado) -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/71UCLpJJB6L.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="Magnesio (glicinado)" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Magnesio (glicinado)</h3>
+                <p class="product-brand">Marca: Pure Encapsulations</p>
+                <p class="product-description">Está diseñado para apoyar la salud del corazón, la energía, el metabolismo de nutrientes y la relajación, Ayuda en el metabolismo de carbohidratos y aminoácidos</p>
+                <ul class="product-features">
+                    <li>Metabolismo de nutrientes: Favorece la utilización de vitaminas B6, C y E.</li>
+                    <li>Apoyo al sueño y relajación: Puede mejorar el ciclo del sueño y promover la relajación.</li>
+                </ul>
+                <a href="https://www.amazon.com/-/es/Encapsulaciones-puras-Magnesio-glicinado-1/dp/B07P5K7DQP?th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=1d2831b569c83ac83965df58d8a7b42d&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+            </div>
+        </div><!-- Biotin Complejo nutricional  -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/61CPcvxcomL.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="Biotin Complejo nutricional " class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Biotin Complejo nutricional </h3>
+                <p class="product-brand">Marca: Nature's Bounty</p>
+                <p class="product-description">Este suplemento de biotina de Nature's Bounty está diseñado para fortalecer el cabello, la piel y las uñas, además de apoyar el metabolismo energético y la salud del sistema nervioso</p>
+                <ul class="product-features">
+                    <li>Salud del sistema nervioso</li>
+                    <li>Fortalece la salud del cabello</li>
+                    <li>Promueve la salud de la piel y las uñas</li>
+                </ul>
+                <a href="https://www.amazon.com/-/es/Complejo-nutricional-c%C3%A1psulas-liberaci%C3%B3n-hhh-kyyy-tra-rat7924/dp/B009SZXM4E?th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=f517dd24328d148da3065a16046917d1&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+            </div>
+        </div>
         
+            </div>
+        </section>
         <section id="proteina">
             <h2 class="category-title">Proteínas y Ganadores</h2>
             <div class="products">
@@ -718,6 +762,60 @@
                 </div>
             </div>
         </section>
+
+        <section id="Belleza">
+            <h2 class="category-title">Belleza y Cuidado Personal</h2>
+            <div class="products">
+        <!-- ROUND LAB Zumo -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/51qg7ayhl5L._SX425_.jpg" alt="ROUND LAB Zumo" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Protector solar Zumo</h3>
+                <p class="product-brand">Marca:  ROUND LAB</p>
+                <p class="product-description">hidratante UV LOCK SPF 45 Protección UV de amplio espectro, ligero, sin aceite, protector solar coreano</p>
+                <ul class="product-features">
+                    <li>Factor de protección 45 Factor de protección solar</li>
+                    <li>Peso del artículo 50 Gramos</li>
+                    <li>Beneficios del producto Protección ultravioleta</li>
+                </ul>
+                <a href="https://www.amazon.com/dp/B0DJGWH3TC?social_share=cm_sw_r_cso_wa_apin_dp_XYT1AD8JEYT7KPFCPV3F&previewDoh=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=98aa29cd9d47f2b05cd368e202f313e2&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+            </div>
+        </div><!-- Protector solar mineral hidratante -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/416Sk9pmkHL._SX300_SY300_QL70_FMwebp_.jpg" alt="Protector solar mineral hidratante" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Protector solar mineral hidratante</h3>
+                <p class="product-brand">Marca: CeraVe</p>
+                <p class="product-description">hidratante SPF 30 con tinte transparente, protector solar mineral tintado con óxido de zinc y dióxido de titanio</p>
+                <ul class="product-features">
+                    <li>Fragancia: Sin fragancia</li>
+                    <li>Factor de protección 30 Factor de protección solar</li>
+                </ul>
+                <a href="https://www.amazon.com/dp/B0D9L7CTFB?social_share=cm_sw_r_cso_wa_apin_dp_05Y429DAGGN0M6SMEMFA&previewDoh=1&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=da37da837872f3cf17b96784f61dff17&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+            </div>
+        </div><!-- limpiador doble para limpieza facial -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/318fULkpoFL._SX300_SY300_QL70_FMwebp_.jpg" alt="limpiador doble para limpieza facial" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">limpiador doble para limpieza facial</h3>
+                <p class="product-brand">Marca: Anua Dúo</p>
+                <p class="product-description">ceite limpiador de control de poros Heartleaf y espuma de limpieza profunda de poros de quercetinol Heartleaf para doble limpieza</p>
+                <ul class="product-features">
+                    <li>suave alrededor de la zona de los ojos con menos sensación de picazón</li>
+                    <li>Limpieza de poros para todos los tipos de piel</li>
+                </ul>
+                <a href="https://www.amazon.com/dp/B0CMPSYW3M?social_share=cm_sw_r_cso_wa_apin_dp_EYWNRYPE5HVPWY81FKNA&previewDoh=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=35733316b3f6b12635955d5ddbbc94e1&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+            </div>
+        </div>
+            </div>
+            
+        </section>
         
         <section id="calculator" class="calculator-section">
             <div class="container">
@@ -820,7 +918,7 @@
                     <div class="contact-info">
                         <h3>Información de Contacto</h3>
                         <ul>
-                            <li>✉️ @fitnessysuplementos.com</li>
+                            <li>✉️ contacto@fitnessysuplementos.com</li>
                             <li>📱 @fitnessysuplementos (Instagram)</li>
                         </ul>
                     </div>
@@ -955,5 +1053,6 @@
             calculateWeights();
         });
     </script>
+   
 </body>
 </html>
