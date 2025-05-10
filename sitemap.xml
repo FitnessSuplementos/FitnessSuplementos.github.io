@@ -1,8 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://fitnesssuplementos.github.io/</loc>
-    <lastmod>2024-05-05</lastmod>
-    <priority>1.0</priority>
-  </url>
+    <!-- Página principal -->
+    <url>
+        <loc>https://fitnesssuplementos.github.io/</loc>
+        <lastmod>2025-05-09</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- Sección de Vitaminas -->
+    <url>
+        <loc>https://fitnesssuplementos.github.io/#vitamina</loc>
+        <lastmod>2025-05-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Sección de Proteínas -->
+    <url>
+        <loc>https://fitnesssuplementos.github.io/#proteina</loc>
+        <lastmod>2025-05-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Sección de Suplementos -->
+    <url>
+        <loc>https://fitnesssuplementos.github.io/#suplementos</loc>
+        <lastmod>2025-05-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Sección de Equipo -->
+    <url>
+        <loc>https://fitnesssuplementos.github.io/#equipo</loc>
+        <lastmod>2025-05-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Sección de Belleza -->
+    <url>
+        <loc>https://fitnesssuplementos.github.io/#Belleza</loc>
+        <lastmod>2025-05-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Calculadora -->
+    <url>
+        <loc>https://fitnesssuplementos.github.io/#calculator</loc>
+        <lastmod>2025-05-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Contacto -->
+    <url>
+        <loc>https://fitnesssuplementos.github.io/#contacto</loc>
+        <lastmod>2025-05-09</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
 </urlset>
