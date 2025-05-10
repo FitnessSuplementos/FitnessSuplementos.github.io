@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fitnesssuplementos.github.io/sitemap.xml
