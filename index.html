@@ -502,6 +502,28 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+
+        /* Ajustes para pantallas pequeñas */
+        @media (max-width: 600px) {
+            .results-grid,
+            #extra-results .results-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Ajusta el ancho mínimo */
+                gap: 10px; /* Espaciado más pequeño */
+            }
+
+            .result-item {
+                text-align: center; /* Centrar contenido */
+                padding: 10px; /* Reducir padding */
+            }
+
+            .result-item h4 {
+                font-size: 0.9rem; /* Ajustar tamaño de fuente */
+            }
+
+            .result-item p {
+                font-size: 1rem; /* Ajustar tamaño de fuente */
+            }
+        }
     </style>
 </head>
 <body>
