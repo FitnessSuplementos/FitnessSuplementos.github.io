@@ -1,1403 +1,1145 @@
-<style>
-    /* Variables y estilos base */
-    :root {
-        --primary-color: #1a2a6c;
-        --primary-dark: #2980b9;
-        --secondary-color: #b21f1f;
-        --accent-color: #fdbb2d;
-        --light-gray: #f8f9fa;
-        --medium-gray: #e0e0e0;
-        --dark-gray: #343a40;
-        --success-color: #27ae60;
-        --error-color: #e74c3c;
-        --text-color: #333;
-        --container-padding: 15px;
-    }
-    
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    
-    body {
-        background-color: var(--light-gray);
-        color: var(--text-color);
-        line-height: 1.6;
-        overflow-x: hidden;
-        margin: 0;
-        padding: 0;
-    }
-    
-    /* Encabezado */
-    .plan-header {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-        color: white;
-        padding: 1.5rem 0;
-        text-align: center;
-        margin-bottom: 30px;
-        border-radius: 0 0 10px 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    
-    .plan-title {
-        font-size: clamp(1.8rem, 5vw, 2.5rem);
-        margin-bottom: 10px;
-        font-weight: 800;
-    }
-    
-    .plan-subtitle {
-        font-size: clamp(0.9rem, 3vw, 1.2rem);
-        opacity: 0.9;
-        padding: 0 10px;
-    }
-    
-    /* Contenedor principal */
-    .main-content {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: var(--container-padding);
-        box-sizing: border-box;
-        width: 100%;
-    }
-    
-    h1, h2, h3, h4 {
-        color: var(--secondary-color);
-        margin-top: 0;
-        position: relative;
-    }
-    
-    h2::after {
-        content: '';
-        display: block;
-        width: 80px;
-        height: 4px;
-        background: var(--primary-color);
-        margin: 10px 0 15px;
-    }
-    
-    .container {
-        background-color: white;
-        border-radius: 10px;
-        padding: 25px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        margin-bottom: 30px;
-        width: 100%;
-        box-sizing: border-box;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .container:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-    
-    /* Formulario */
-    .form-group {
-        margin-bottom: 20px;
-    }
-    
-    label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 600;
-        color: var(--primary-color);
-    }
-    
-    input, select {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid var(--medium-gray);
-        border-radius: 5px;
-        font-size: 16px;
-        transition: all 0.3s;
-    }
-    
-    input:focus, select:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.2);
-    }
-    
-    .input-error {
-        border-color: var(--error-color);
-    }
-    
-    .error-message {
-        color: var(--error-color);
-        font-size: 14px;
-        margin-top: 5px;
-        display: none;
-    }
-    
-    /* Botones */
-    button {
-        background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
-        color: white;
-        border: none;
-        padding: 14px 24px;
-        border-radius: 50px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 600;
-        transition: all 0.3s;
-        width: 100%;
-        margin-top: 10px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    
-    button:hover {
-        background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
-        transform: translateY(-3px);
-        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    }
-    
-    button:active {
-        transform: translateY(1px);
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .print-btn {
-        background: linear-gradient(to right, var(--secondary-color), #d35400);
-    }
-    
-    .print-btn:hover {
-        background: linear-gradient(to right, #d35400, var(--secondary-color));
-    }
-    
-    /* Cambiar el botón "Generar Plan de Comidas" a naranja */
-    #macro-calculator button {
-        background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
-    }
-
-    #macro-calculator button:hover {
-        background: linear-gradient(to right, var(--accent-color), var(--secondary-color));
-    }
-    
-    /* Plan de comidas */
-    .meal-plan {
-        margin-top: 30px;
-        display: none;
-    }
-    
-    .day {
-        background-color: white;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 30px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        border-left: 4px solid var(--primary-color);
-        transition: transform 0.3s ease;
-    }
-    
-    .day:hover {
-        transform: translateY(-3px);
-    }
-    
-    .macros-total {
-        background: linear-gradient(to right, rgba(26, 42, 108, 0.1), rgba(178, 31, 31, 0.1));
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-    
-    .macros-total p {
-        margin: 5px 0;
-        flex-basis: 48%;
-        font-weight: 600;
-    }
-    
-    .macros-total p span {
-        color: var(--primary-color);
-    }
-    
-    .meal {
-        margin-bottom: 25px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid var(--medium-gray);
-    }
-    
-    .meal:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
-    
-    .meal-title {
-        color: var(--primary-color);
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-    }
-    
-    .meal-title::before {
-        content: '';
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        background-color: var(--accent-color);
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-    
-    .meal-macros {
-        font-size: 14px;
-        color: var(--dark-gray);
-        margin-top: 10px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-    
-    .meal-macros strong {
-        color: var(--secondary-color);
-        margin-right: 5px;
-    }
-    
-    .food-item {
-        margin-left: 20px;
-        margin-top: 8px;
-        position: relative;
-        padding-left: 15px;
-    }
-    
-    .food-item:before {
-        content: "•";
-        position: absolute;
-        left: 0;
-        color: var(--accent-color);
-        font-weight: bold;
-    }
-    
-    /* Lista de compras */
-    .shopping-list {
-        columns: 2;
-        column-gap: 30px;
-    }
-    
-    .shopping-category {
-        break-inside: avoid;
-        margin-bottom: 20px;
-        background-color: #f8f9fa;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    
-    .shopping-category h4 {
-        color: var(--primary-color);
-        margin-bottom: 10px;
-        font-size: 1.1rem;
-    }
-    
-    /* Loading spinner */
-    .loading {
-        display: none;
-        text-align: center;
-        padding: 20px;
-    }
-    
-    .spinner {
-        border: 4px solid rgba(0, 0, 0, 0.1);
-        border-radius: 50%;
-        border-top: 4px solid var(--primary-color);
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 15px;
-    }
-    
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    
-    /* Pestañas */
-    .tab-container {
-        display: flex;
-        margin-bottom: 20px;
-        border-bottom: 1px solid var(--medium-gray);
-    }
-    
-    .tab {
-        padding: 10px 20px;
-        cursor: pointer;
-        border-bottom: 3px solid transparent;
-        transition: all 0.3s;
-        font-weight: 600;
-        color: var(--dark-gray);
-    }
-    
-    .tab.active {
-        border-bottom: 3px solid var(--primary-color);
-        color: var(--primary-color);
-    }
-    
-    .tab:hover:not(.active) {
-        color: var(--secondary-color);
-    }
-    
-    .tab-content {
-        display: none;
-    }
-    
-    .tab-content.active {
-        display: block;
-    }
-    
-    /* Resultados de macros */
-    .macro-results {
-        background: linear-gradient(to right, rgba(26, 42, 108, 0.1), rgba(253, 187, 45, 0.1));
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-    
-    .macro-results h3 {
-        margin-bottom: 15px;
-        color: var(--primary-color);
-    }
-    
-    .macro-numbers {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 15px;
-    }
-    
-    .macro-number {
-        background-color: white;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease;
-    }
-    
-    .macro-number:hover {
-        transform: translateY(-3px);
-    }
-    
-    .macro-number p:first-child {
-        font-weight: 600;
-        color: var(--primary-color);
-        margin-bottom: 5px;
-        font-size: 0.9rem;
-    }
-    
-    .macro-number p:last-child {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: var(--secondary-color);
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-        .shopping-list {
-            columns: 1;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <!-- Mejorada la etiqueta viewport para permitir zoom -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <!-- Añadida metadescripción para SEO -->
+    <meta name="description" content="Recomendaciones de productos de fitness y suplementos nutricionales. Encuentra las mejores proteínas, vitaminas y equipos de entrenamiento con nuestros análisis expertos.">
+    <!-- Añadidos meta tags para SEO y accesibilidad -->
+    <meta name="keywords" content="fitness, suplementos, proteínas, vitaminas, entrenamiento, musculación, salud">
+    <meta name="author" content="Fitness y Suplementos">
+    <title>Fitness y Suplementos - Recomendaciones Expertas</title>
+    <style>
+        /* Variables y estilos base */
+        :root {
+            --primary-color: #1a2a6c;
+            --secondary-color: #b21f1f;
+            --accent-color: #fdbb2d;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+            --container-padding: 15px;
         }
         
-        .macro-numbers {
-            grid-template-columns: 1fr 1fr;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        .macros-total p {
-            flex-basis: 100%;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .macro-numbers {
-            grid-template-columns: 1fr;
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
         
         .container {
-            padding: 15px;
+            width: 100%;
+            padding: 0 var(--container-padding);
+            max-width: 1200px;
+            margin: 0 auto;
         }
-    }
-</style>
+        
+        /* Encabezado */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+        
+        .tagline {
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            opacity: 0.9;
+            padding: 0 10px;
+        }
+        
+        /* Navegación */
+        nav {
+            background-color: var(--dark-bg);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+            padding: 5px 0;
+        }
+        
+        nav ul li {
+            margin: 5px 10px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Hero section */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: clamp(250px, 50vh, 400px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 20px;
+        }
+        
+        /* Secciones de productos */
+        .category-title {
+            text-align: center;
+            margin: clamp(30px, 5vw, 50px) 0 clamp(20px, 3vw, 30px);
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 15px auto 0;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 20px 0 40px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .product-image-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .product-image {
+            width: auto;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-title {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+        
+        .product-brand {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            flex-grow: 1;
+        }
+        
+        .product-features {
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+        }
+        
+        .product-features li {
+            margin-bottom: 5px;
+            list-style-position: inside;
+        }
+        
+        /* Botones */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: auto;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(178, 31, 31, 0.4);
+        }
+        
+        /* Disclaimer */
+        .disclaimer {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        /* Calculadora */
+        .calculator-section {
+            padding: 30px 0;
+            background: var(--light-bg);
+        }
+        
+        .calculator-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .calculator-form, .calculator-results {
+            width: 100%;
+        }
+        
+        .calculator-input {
+            margin-bottom: 15px;
+        }
+        
+        .calculator-input label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .calculator-input input,
+        .calculator-input select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .results-grid {
+            display: grid;
+            gap: 15px;
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .result-item {
+            background: var(--light-bg);
+            padding: 12px;
+            border-radius: 8px;
+        }
+        
+        .result-item h4 {
+            color: var(--secondary-color);
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .result-item p {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        #extra-results {
+            display: none;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        #extra-results .results-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        #show-more-button {
+            margin-top: 15px;
+            padding: 12px;
+            width: 100%;
+        }
+        
+        /* Contacto */
+        .contact-section {
+            margin-bottom: 30px;
+        }
+        
+        .contact-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .contact-info, .contact-form {
+            margin-bottom: 20px;
+        }
+        
+        .contact-info h3, .contact-form h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .contact-info ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .contact-info ul li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+        
+        .contact-form form div {
+            margin-bottom: 15px;
+        }
+        
+        .contact-form form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .contact-form form input,
+        .contact-form form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .contact-form form textarea {
+            min-height: 100px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 10px 10px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        footer p {
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        
+        .affiliate-disclosure {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
+            text-align: center;
+        }
+        
+        /* Media queries para ajustes específicos */
+        @media (min-width: 768px) {
+            .calculator-container {
+                flex-direction: row;
+                padding: 30px;
+                gap: 30px;
+            }
+            
+            .calculator-form, .calculator-results {
+                flex: 1;
+            }
+            
+            .contact-container {
+                display: flex;
+                gap: 30px;
+                padding: 30px;
+            }
+            
+            .contact-info, .contact-form {
+                flex: 1;
+                margin-bottom: 0;
+            }
+            
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 30px;
+            }
+            
+            .product-info {
+                padding: 20px;
+            }
+            
+            .disclaimer {
+                padding: 20px;
+                margin: 30px 0;
+            }
+            
+            .hero {
+                height: 400px;
+            }
+            
+            .hero h1 {
+                margin-bottom: 20px;
+            }
+            
+            .hero p {
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            #extra-results .results-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Ajustes para pantallas pequeñas */
+        @media (max-width: 600px) {
+            .results-grid,
+            #extra-results .results-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Ajusta el ancho mínimo */
+                gap: 10px; /* Espaciado más pequeño */
+            }
+
+            .result-item {
+                text-align: center; /* Centrar contenido */
+                padding: 10px; /* Reducir padding */
+            }
+
+            .result-item h4 {
+                font-size: 0.9rem; /* Ajustar tamaño de fuente */
+            }
+
+            .result-item p {
+                font-size: 1rem; /* Ajustar tamaño de fuente */
+            }
+        }
+    </style>
 </head>
 <body>
+    <script src="products.js"></script>
+    <header>
+        <div class="container">
+            <div class="logo">Fitness & Suplementos</div>
+            <p class="tagline">Las mejores recomendaciones para tu entrenamiento</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#vitamina">vitaminas</a></li>
+                <li><a href="#proteina">Proteínas</a></li>
+                <li><a href="#suplementos">Suplementos</a></li>
+                <li><a href="#equipo">Equipo</a></li>
+                <li><a href="#Belleza">Belleza</a></li>
+                <li><a href="#Dieta">Dieta</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Transforma tu cuerpo con los mejores productos</h1>
+            <p>Selección de artículos de fitness y suplementos recomendados por expertos</p>
+            <a href="#calculator" class="btn">Ir a la Calculadora</a>
+        </div>
+    </section>
     
     <div class="container">
-        
-        <p>Crea un plan de comidas personalizado basado en tus necesidades nutricionales y preferencias dietéticas.</p>
-        
-        <div class="form-container">
-            <h2>Calcula tus macros</h2>
-            <form id="macro-calculator">
-                <div class="form-group">
-                    <label for="height">Estatura (cm)</label>
-                    <input type="number" id="height" name="height" min="100" max="250" required>
-                    <div class="error-message" id="height-error">Por favor ingresa una estatura válida (100-250 cm)</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="weight">Peso (kg)</label>
-                    <input type="number" id="weight" name="weight" min="30" max="200" required>
-                    <div class="error-message" id="weight-error">Por favor ingresa un peso válido (30-200 kg)</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="age">Edad</label>
-                    <input type="number" id="age" name="age" min="15" max="100" required>
-                    <div class="error-message" id="age-error">Por favor ingresa una edad válida (15-100 años)</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="gender">Género</label>
-                    <select id="gender" name="gender" required>
-                        <option value="male">Masculino</option>
-                        <option value="female">Femenino</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="activity">Nivel de actividad</label>
-                    <select id="activity" name="activity" required>
-                        <option value="1.2">Sedentario (poco o ningún ejercicio)</option>
-                        <option value="1.375">Ligero (ejercicio ligero 1-3 días/semana)</option>
-                        <option value="1.55" selected>Moderado (ejercicio moderado 3-5 días/semana)</option>
-                        <option value="1.725">Activo (ejercicio intenso 6-7 días/semana)</option>
-                        <option value="1.9">Muy activo (ejercicio muy intenso y trabajo físico)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="goal">Objetivo</label>
-                    <select id="goal" name="goal" required>
-                        <option value="0.85">Pérdida de peso (15% déficit)</option>
-                        <option value="1" selected>Mantenimiento</option>
-                        <option value="1.15">Aumento de masa muscular (15% superávit)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="diet">Tipo de dieta</label>
-                    <select id="diet" name="diet" required>
-                        <option value="standard">Estándar</option>
-                        <option value="vegetarian">Vegetariana</option>
-                        <option value="vegan">Vegana</option>
-                        <option value="keto">Keto</option>
-                        <option value="low_carb">Baja en carbohidratos</option>
-                        <option value="mediterranean">Mediterránea</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="meals-per-day">Comidas por día</label>
-                    <select id="meals-per-day" name="meals-per-day" required>
-                        <option value="3">3 comidas</option>
-                        <option value="4" selected>4 comidas</option>
-                        <option value="5">5 comidas</option>
-                    </select>
-                </div>
-                
-                <button type="submit">Generar Plan de Comidas</button>
-            </form>
+        <div class="disclaimer">
+            <strong>Nota:</strong> Este sitio contiene enlaces de afiliado a Amazon. Como asociado de Amazon, gano por compras calificadas sin costo adicional para ti. Todas las recomendaciones se basan en investigación y experiencia personal.
         </div>
-    </div>
-    
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <p>Generando tu plan de comidas personalizado...</p>
-    </div>
-    
-    <div id="meal-plan-result" class="container meal-plan">
-        <h2>Tu plan de alimentación personalizado</h2>
-        
-        <div class="macro-results">
-            <h3>Recomendación de Macros Diarios</h3>
-            <div class="macro-numbers">
-                <div class="macro-number">
-                    <p>Calorías</p>
-                    <p id="total-calories">0</p>
-                </div>
-                <div class="macro-number">
-                    <p>Proteína</p>
-                    <p id="total-protein">0 g</p>
-                </div>
-                <div class="macro-number">
-                    <p>Carbohidratos</p>
-                    <p id="total-carbs">0 g</p>
-                </div>
-                <div class="macro-number">
-                    <p>Grasas</p>
-                    <p id="total-fat">0 g</p>
-                </div>
+        <section id="vitamina">
+            <h2 class="category-title">Vitaminas y Minerales</h2>
+            <div class="products">
+        <!-- Suplemento de inositol de alta calidad -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/61zL4rNGq-L.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="Suplemento de inositol de alta calidad" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Suplemento de inositol</h3>
+                <p class="product-brand">Marca: Optify</p>
+                <p class="product-description">mio-inositol e inositol D-Chiro más folato y vitamina D, relación ideal 40:1, equilibrio hormonal y apoyo ovárico saludable para mujeres, vitamina B8, suministro para 30 días</p>
+                <ul class="product-features">
+                    <li>Tipo de dieta Vegano</li>
+                    <li>Sabor Fruta.</li>
+                    <li>Hormona de fertilidad natural y apoyo menstrual</li>
+                </ul>
+                <a href="https://www.amazon.com/dp/B07W4FNSFF?social_share=cm_sw_r_cso_wa_apin_dp_H2NC95KBB5Y2XNDC4Z1E&previewDoh=1&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=9eaa3d27760c39a5f105bc3ade13c9c0&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+            </div>
+        </div><!-- Magnesio (glicinado) -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/71UCLpJJB6L.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="Magnesio (glicinado)" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Magnesio (glicinado)</h3>
+                <p class="product-brand">Marca: Pure Encapsulations</p>
+                <p class="product-description">Está diseñado para apoyar la salud del corazón, la energía, el metabolismo de nutrientes y la relajación, Ayuda en el metabolismo de carbohidratos y aminoácidos</p>
+                <ul class="product-features">
+                    <li>Metabolismo de nutrientes: Favorece la utilización de vitaminas B6, C y E.</li>
+                    <li>Apoyo al sueño y relajación: Puede mejorar el ciclo del sueño y promover la relajación.</li>
+                </ul>
+                <a href="https://www.amazon.com/-/es/Encapsulaciones-puras-Magnesio-glicinado-1/dp/B07P5K7DQP?th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=1d2831b569c83ac83965df58d8a7b42d&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+            </div>
+        </div><!-- Biotin Complejo nutricional  -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/61CPcvxcomL.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="Biotin Complejo nutricional " class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Biotin Complejo nutricional </h3>
+                <p class="product-brand">Marca: Nature's Bounty</p>
+                <p class="product-description">Este suplemento de biotina de Nature's Bounty está diseñado para fortalecer el cabello, la piel y las uñas, además de apoyar el metabolismo energético y la salud del sistema nervioso</p>
+                <ul class="product-features">
+                    <li>Salud del sistema nervioso</li>
+                    <li>Fortalece la salud del cabello</li>
+                    <li>Promueve la salud de la piel y las uñas</li>
+                </ul>
+                <a href="https://www.amazon.com/-/es/Complejo-nutricional-c%C3%A1psulas-liberaci%C3%B3n-hhh-kyyy-tra-rat7924/dp/B009SZXM4E?th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=f517dd24328d148da3065a16046917d1&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
             </div>
         </div>
         
-        <div class="tab-container">
-            <div class="tab active" data-tab="day1">Día 1</div>
-            <div class="tab" data-tab="day2">Día 2</div>
-            <div class="tab" data-tab="day3">Día 3</div>
-            <div class="tab" data-tab="day4">Día 4</div>
-            <div class="tab" data-tab="day5">Día 5</div>
-        </div>
+            </div>
+        </section>
+        <section id="proteina">
+            <h2 class="category-title">Proteínas y Ganadores</h2>
+            <div class="products">
+                <!-- Producto 1 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71OsEAdPuZL.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="Proteína en polvo" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Proteína Whey Premium</h3>
+                        <p class="product-brand">Marca: Optimum Nutrition</p>
+                        <p class="product-description">Proteína de suero de leche de alta calidad con bajo contenido de lactosa y excelente perfil de aminoácidos.</p>
+                        <ul class="product-features">
+                            <li>24g de proteína por servicio</li>
+                            <li>5.5g de BCAA naturales</li>
+                            <li>Disponible en varios sabores</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B002DYIZH6?&linkCode=ll1&tag=fitnesssupl0d-20&linkId=8342e37199bff99224875c1b79562931&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 2 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/81gq678bzQL._AC_SX569_.jpg" alt="Suplemento para ganar masa muscular Dymatize" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Suplemento Dymatize</h3>
+                        <p class="product-brand">Marca: Dymatize</p>
+                        <p class="product-description">0.38 oz de BCAA como bloques de construcción, incluyendo 0.18 oz de leucina, como bloques de construcción para ayudar a activar la síntesis de proteínas musculares</p>
+                        <ul class="product-features">
+                            <li>1.83 oz de proteína por porción</li>
+                            <li>1.83 oz de proteína por porción</li>
+                            <li>17 vitaminas y minerales</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B0020XQWCA?social_share=cm_sw_r_cp_ud_dp_Y97WXYPEWZGKGEHRGW66&previewDoh=1&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=3341db7ff655b2449573b95b097b0beb&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 3 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/712hh-bJ7OL._AC_SX569_.jpg" alt="Ganador de peso" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Ganador de Peso Serious Mass</h3>
+                        <p class="product-brand">Marca: Optimum Nutrition</p>
+                        <p class="product-description">Suplemento de ganancia de peso con proteínas, carbohidratos y vitaminas para aumentar masa muscular.</p>
+                        <ul class="product-features">
+                            <li>260 calorías por porción de 2 cucharadas</li>
+                            <li>1.76 onzas de proteína mezclada por porción</li>
+                            <li>22 vitaminas y minerales, incluidas la vitamina C, la vitamina D y el zinc, para reforzar el sistema inmunitario</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B00CX96668?social_share=cm_sw_r_cp_ud_dp_2SMWQTAM3JVMDR88EZA6_1&previewDoh=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=9218fcb3f2527aeca1af550eb51b000b&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
         
-        <div class="tab-content active" id="day1">
-            <!-- Contenido del día 1 se generará dinámicamente -->
-        </div>
+        <section id="suplementos">
+            <h2 class="category-title">Suplementos Deportivos</h2>
+            <div class="products">
+                <!-- Producto 1 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71+jxNBDLTL._AC_SX569_.jpg" alt="Creatina Monohidrato" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">creatina en polvo Muscletech</h3>
+                        <p class="product-brand">Marca: MuscleTech</p>
+                        <p class="product-description">Suplemento de creatina micronizada para aumentar fuerza, potencia y masa muscular magra Sin Gluten.</p>
+                        <ul class="product-features">
+                            <li>100% creatina</li>
+                            <li>Mejora el rendimiento en entrenamientos</li>
+                            <li>Aumenta la capacidad de recuperación</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B008LQT7UY?social_share=cm_sw_r_cp_ud_dp_8TKJCG5814D9Q937PFYD&previewDoh=1&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=485f6be5cc92afe891139d3107e1e544&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 2 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/51RUrtXPM+L._AC_SY300_SX300_.jpg" alt="BCAA en polvo" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Polvo de electrolitos mejorado</h3>
+                        <p class="product-brand">Marca: Zeal Naturals</p>
+                        <p class="product-description">Electrolitos mejorados para hidratación y recuperación. Mejorado con BCAAs, sal rosa del Himalaya y vitaminas B para hidratación, recuperación y soporte de resistencia.</p>
+                        <ul class="product-features">
+                            <li>Potasio, magnesio, vitamina, complejo B, zinc</li>
+                            <li>Sin colorantes artificiales</li>
+                            <li>Disponible en varios sabores</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B0887TCVBY?_encoding=UTF8&social_share=cm_sw_r_cp_ud_dp_FM4R1HYMV2JS5EX914XB&previewDoh=1&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=b97e069f9a54ba4a0726042b4f15974c&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 3 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/81cFrFw4FKL._AC_SX569_PIbundle-24,TopRight,0,0_SH20_.jpg" alt="Pre-entreno" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">C4 Energy Drink</h3>
+                        <p class="product-brand">Marca: C4</p>
+                        <p class="product-description">Fórmula avanzada de pre-entrenamiento para energía, enfoque y bombeo muscular.</p>
+                        <ul class="product-features">
+                            <li>Contiene beta-alanina y creatina</li>
+                            <li>Mejora el rendimiento atlético</li>
+                            <li>Energía sostenida sin choque</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B0CSVHNM1Y?social_share=cm_sw_r_cp_ud_dp_CHP3347JPDGGKEX899SW&previewDoh=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=47cb86785c9e3c6db65046cf0afca6fe&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
         
-        <div class="tab-content" id="day2">
-            <!-- Contenido del día 2 se generará dinámicamente -->
+        <section id="equipo">
+            <h2 class="category-title">Equipo de Entrenamiento</h2>
+            <div class="products">
+                <!-- Producto 1 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/61jau6tusOL._AC_SX569_.jpg" alt="Mancuernas ajustables" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Bowflex Mancuernas ajustables SelectTech 552</h3>
+                        <p class="product-brand">Marca: Bowflex</p>
+                        <p class="product-description">Rango de peso más amplio: cada mancuerna se ajusta de 5 a 52.5 libras. en 2.5 lb. incrementos de hasta 25 libras.</p>
+                        <ul class="product-features">
+                            <li>Ahorra espacio y dinero</li>
+                            <li>Sistema de cambio rápido</li>
+                            <li>Base de almacenamiento incluida</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B001ARYU58?social_share=cm_sw_r_cp_ud_dp_2733W55MH0PRDD7C9H1M&previewDoh=1&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=ad58efa4c464956fb9f4a1a3fee4354b&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 2 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71S4-NjoTDL._AC_SX569_.jpg" alt="Bandas de resistencia" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Set de Bandas de Resistencia</h3>
+                        <p class="product-brand">Marca: Fit Simplify</p>
+                        <p class="product-description">Juego de 5 bandas de resistencia con diferentes niveles para entrenamiento en casa o gimnasio.</p>
+                        <ul class="product-features">
+                            <li>Incluye accesorios y bolsa de transporte</li>
+                            <li>Material de látex natural duradero</li>
+                            <li>Manual de ejercicios incluido</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B01AVDVHTI?social_share=cm_sw_r_cp_ud_dp_KH8Z03FAHZPGSJH726AA&previewDoh=1&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=d352b238598e1085b2581c0dd2c0e56d&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+                
+                <!-- Producto 3 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://m.media-amazon.com/images/I/71EzizrzGYL._AC_SX569_.jpg" alt="Barra para dominadas" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Barra para Dominadas en Puerta</h3>
+                        <p class="product-brand">Marca: Perfect Fitness</p>
+                        <p class="product-description">Barra de dominadas que se instala sin herramientas en cualquier marco de puerta estándar.</p>
+                        <ul class="product-features">
+                            <li>Soporta hasta 300 libras</li>
+                            <li>Ajustable para diferentes anchos</li>
+                            <li>Empuñaduras cómodas</li>
+                        </ul>
+                        <a href="https://www.amazon.com/dp/B01KN17NTQ?social_share=cm_sw_r_cp_ud_dp_EJX2F8NBHPCHM7YB7QDM&previewDoh=1&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=d8d665e782bc3023466c1e0db42e5c70&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="Belleza">
+            <h2 class="category-title">Belleza y Cuidado Personal</h2>
+            <div class="products">
+        <!-- ROUND LAB Zumo -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/51qg7ayhl5L._SX425_.jpg" alt="ROUND LAB Zumo" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Protector solar Zumo</h3>
+                <p class="product-brand">Marca:  ROUND LAB</p>
+                <p class="product-description">hidratante UV LOCK SPF 45 Protección UV de amplio espectro, ligero, sin aceite, protector solar coreano</p>
+                <ul class="product-features">
+                    <li>Factor de protección 45 Factor de protección solar</li>
+                    <li>Peso del artículo 50 Gramos</li>
+                    <li>Beneficios del producto Protección ultravioleta</li>
+                </ul>
+                <a href="https://www.amazon.com/dp/B0DJGWH3TC?social_share=cm_sw_r_cso_wa_apin_dp_XYT1AD8JEYT7KPFCPV3F&previewDoh=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=98aa29cd9d47f2b05cd368e202f313e2&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+            </div>
+        </div><!-- Protector solar mineral hidratante -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/416Sk9pmkHL._SX300_SY300_QL70_FMwebp_.jpg" alt="Protector solar mineral hidratante" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Protector solar mineral hidratante</h3>
+                <p class="product-brand">Marca: CeraVe</p>
+                <p class="product-description">hidratante SPF 30 con tinte transparente, protector solar mineral tintado con óxido de zinc y dióxido de titanio</p>
+                <ul class="product-features">
+                    <li>Fragancia: Sin fragancia</li>
+                    <li>Factor de protección 30 Factor de protección solar</li>
+                </ul>
+                <a href="https://www.amazon.com/dp/B0D9L7CTFB?social_share=cm_sw_r_cso_wa_apin_dp_05Y429DAGGN0M6SMEMFA&previewDoh=1&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=da37da837872f3cf17b96784f61dff17&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+            </div>
+        </div><!-- limpiador doble para limpieza facial -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://m.media-amazon.com/images/I/318fULkpoFL._SX300_SY300_QL70_FMwebp_.jpg" alt="limpiador doble para limpieza facial" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">limpiador doble para limpieza facial</h3>
+                <p class="product-brand">Marca: Anua Dúo</p>
+                <p class="product-description">ceite limpiador de control de poros Heartleaf y espuma de limpieza profunda de poros de quercetinol Heartleaf para doble limpieza</p>
+                <ul class="product-features">
+                    <li>suave alrededor de la zona de los ojos con menos sensación de picazón</li>
+                    <li>Limpieza de poros para todos los tipos de piel</li>
+                </ul>
+                <a href="https://www.amazon.com/dp/B0CMPSYW3M?social_share=cm_sw_r_cso_wa_apin_dp_EYWNRYPE5HVPWY81FKNA&previewDoh=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=35733316b3f6b12635955d5ddbbc94e1&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+            </div>
         </div>
-        
-        <div class="tab-content" id="day3">
-            <!-- Contenido del día 3 se generará dinámicamente -->
+   <!-- Gel Cicatrices -->
+   <div class="product-card">
+    <div class="product-image-container">
+        <img src="https://m.media-amazon.com/images/I/71u4dRmutNL._SX425_.jpg" alt="Gel Cicatrices" class="product-image">
+    </div>
+    <div class="product-info">
+        <h3 class="product-title">Gel Cicatrices</h3>
+        <p class="product-brand">Marca: Cicatricure</p>
+        <p class="product-description">Esta fórmula contiene ingredientes que ayudan a mejorar la textura y el estado de las cicatrices al tiempo que hidratan y suavizan visiblemente para una piel rejuvenecida y de aspecto más saludable.</p>
+        <ul class="product-features">
+            <li>Resultados visibles de la semana 8.</li>
+            <li>Para rostro y cuerpo.</li>
+        </ul>
+        <a href="https://www.amazon.com/dp/B0043WAD9O?th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=68c309bccee9d1f262bdee8f1b2748f4&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+    </div>
+   
+    </div>
+    <!-- BIOCORNEUM cicatrices con FPS 30 -->
+    <div class="product-card">
+    <div class="product-image-container">
+        <img src="https://m.media-amazon.com/images/I/61el7JnnyiL._SX425_.jpg" alt="BIOCORNEUM cicatrices con FPS 30" class="product-image">
+    </div>
+    <div class="product-info">
+        <h3 class="product-title">BIOCORNEUM cicatrices con FPS 30</h3>
+        <p class="product-brand">Marca: bioCorneum</p>
+        <p class="product-description">Tecnología avanzada de silicona: experimenta un tratamiento mejorado de cicatrices para la cara y el cuerpo con la silicona reticulada Silishield de BIOCORNEUM. </p>
+        <ul class="product-features">
+            <li>Fragancia: Sin fragancia</li>
+            <li>Factor de protección solar: 30 Factor de protección</li>
+        </ul>
+        <a href="https://www.amazon.com/dp/B00G17U5K6?pf_rd_p=953c7d66-4120-4d22-a777-f19dbfa69309&pf_rd_r=0VYZ3E4CSGDN7BP1JEP9&pd_rd_wg=5t2O7&pd_rd_w=rfu9T&content-id=amzn1.sym.953c7d66-4120-4d22-a777-f19dbfa69309&pd_rd_r=6546ba32-8eae-45d6-8bd7-0524002aeecd&s=beauty&sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWwy&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=46005f72c996e652d769815bca92ce33&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+    </div>
         </div>
+        <!-- Cleanser - El limpiador original -->
+<div class="product-card">
+    <div class="product-image-container">
+        <img src="https://m.media-amazon.com/images/I/31WVr3R+LFL._SX342_SY445_.jpg" alt="Cleanser - El limpiador original" class="product-image">
+    </div>
+    <div class="product-info">
+        <h3 class="product-title">Cleanser - El limpiador original</h3>
+        <p class="product-brand">Marca: EVE LOM</p>
+        <p class="product-description">Nuestro icónico bálsamo limpiador 5 en 1, fabricado con nuestra exclusiva mezcla de aceites aromáticos, limpia, hidrata, tonifica, elimina el maquillaje y exfolia la piel cuando se combina con el paño de muselina EVE LOM 100% incluido</p>
+        <ul class="product-features">
+            <li>Fragancia Signature Blend: clavo, eucalipto, manzanilla</li>
+            <li>Hidratar la piel hasta 12 horas</li>
+        </ul>
+        <a href="https://www.amazon.com/dp/B001IIM5TC?pf_rd_p=953c7d66-4120-4d22-a777-f19dbfa69309&pf_rd_r=CDB4PZAHVCPM6VDXQP15&pd_rd_wg=sOFoL&pd_rd_w=CUaQv&content-id=amzn1.sym.953c7d66-4120-4d22-a777-f19dbfa69309&pd_rd_r=17f2b26c-689a-4a69-aed2-2acb8086d2eb&s=beauty&sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWwy&th=1&linkCode=ll1&tag=fitnesssupl0d-20&linkId=7ca276ae30bb2aea528226e92f5585d0&language=es_US&ref_=as_li_ss_tl" class="btn" target="_blank">Ver en Amazon</a>
+    </div>
+</div>
+ 
+
+
+</section>
+           
         
-        <div class="tab-content" id="day4">
-            <!-- Contenido del día 4 se generará dinámicamente -->
-        </div>
+        <section id="calculator" class="calculator-section">
+            <div class="container">
+                <h2 class="category-title">Calculadora de Pesos Recomendados para Hipertrofia</h2>
+                <div class="calculator-container">
+                    <!-- Formulario -->
+                    <div class="calculator-form">
+                        <div class="calculator-input">
+                            <label for="gender-select">Género:</label>
+                            <select id="gender-select">
+                                <option value="male">Hombre</option>
+                                <option value="female">Mujer</option>
+                            </select>
+                        </div>
+                        <div class="calculator-input">
+                            <label for="weight-input">Peso Corporal (kg):</label>
+                            <input type="number" id="weight-input" value="70" min="40" max="150">
+                        </div>
+                        <div class="calculator-input">
+                            <label for="height-input">Estatura (cm):</label>
+                            <input type="number" id="height-input" value="170" min="140" max="210">
+                        </div>
+                        <div class="calculator-input">
+                            <label for="experience-select">Nivel de Experiencia:</label>
+                            <select id="experience-select">
+                                <option value="beginner">Principiante (0-6 meses)</option>
+                                <option value="intermediate">Intermedio (6-24 meses)</option>
+                                <option value="advanced">Avanzado (2+ años)</option>
+                            </select>
+                        </div>
+                        <button id="calculate-button" class="btn">Calcular</button>
+                    </div>
         
-        <div class="tab-content" id="day5">
-            <!-- Contenido del día 5 se generará dinámicamente -->
-        </div>
+                    <!-- Resultados -->
+                    <div class="calculator-results" id="results">
+                        <h3>Pesos Recomendados para Hipertrofia:</h3>
+                        <div class="results-grid">
+                            <div class="result-item">
+                                <h4>Sentadilla</h4>
+                                <p id="squat-weight">-</p>
+                            </div>
+                            <div class="result-item">
+                                <h4>Press Banca</h4>
+                                <p id="bench-weight">-</p>
+                            </div>
+                            <div class="result-item">
+                                <h4>Peso Muerto</h4>
+                                <p id="deadlift-weight">-</p>
+                            </div>
+                            <div class="result-item">
+                                <h4>Press Militar</h4>
+                                <p id="military-press-weight">-</p>
+                            </div>
+                        </div>
         
-        <h3>Lista de compras</h3>
-        <div class="shopping-list" id="shopping-list">
-            <!-- Lista de compras se generará dinámicamente -->
-        </div>
+                        <!-- Ejercicios adicionales ocultos inicialmente -->
+                        <div id="extra-results">
+                            <div class="results-grid">
+                                <div class="result-item">
+                                    <h4>Curl Bíceps</h4>
+                                    <p id="biceps-weight">-</p>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Extensión Tríceps</h4>
+                                    <p id="triceps-weight">-</p>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Remo con Barra</h4>
+                                    <p id="back-weight">-</p>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Dominadas</h4>
+                                    <p id="pullup-weight">-</p>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Zancadas</h4>
+                                    <p id="lunge-weight">-</p>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Peso para Plancha</h4>
+                                    <p id="plank-weight">-</p>
+                                </div>
+                            </div>
+                        </div>
         
-        <button class="print-btn" onclick="window.print()">Imprimir Plan</button>
+                        <!-- Botón para mostrar más -->
+                        <div style="text-align: center;">
+                            <button id="show-more-button" class="btn">▼ Mostrar más ejercicios</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+            <!-- En tu archivo principal.html -->
+            
+<section id="Dieta" class="Dieta"></section>>  
+    <h2 class="category-title">Generador de Plan de Comidas por Macros</h2> 
+    <iframe src="calculadora_alimenticia.html" frameborder="0" style="width: 100%; min-height: 1200px; "></iframe>
+
+</section>
+        <section id="contacto" style="margin-bottom: 50px;">
+            <h2 class="category-title">Contacto</h2>
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <p style="margin-bottom: 20px; text-align: center;">¿Tienes preguntas sobre nuestros productos recomendados? Contáctanos:</p>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3>Información de Contacto</h3>
+                        <ul>
+                            <li>✉️ contacto@fitnessysuplementos.com</li>
+                            <li>📱 @fitnessysuplementos (Instagram)</li>
+                        </ul>
+                    </div>
+                    <div class="contact-form">
+                        <h3>Envíanos un Mensaje</h3>
+                        <form>
+                            <div>
+                                <label>Nombre:</label>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <label>Email:</label>
+                                <input type="email">
+                            </div>
+                            <div>
+                                <label>Mensaje:</label>
+                                <textarea></textarea>
+                            </div>
+                            <button type="submit" class="btn">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#proteina">Proteínas</a>
+                <a href="#suplementos">Suplementos</a>
+                <a href="#equipo">Equipo</a>
+                <a href="#calculator">Calculadora</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <p>&copy; 2023 Fitness y Suplementos - Todos los derechos reservados</p>
+            <p class="affiliate-disclosure">
+                Este sitio participa en el Programa de Afiliados de Amazon, un programa de publicidad de afiliados diseñado para proporcionar un medio para que los sitios web obtengan tarifas de publicidad mediante anuncios y enlaces a amazon.com.
+            </p>
+        </div>
+    </footer>
+
     <script>
-        // Base de datos de alimentos por tipo de dieta
-        const foodDatabase = {
-            standard: {
-                proteins: [
-                    {name: "Pechuga de pollo", calories: 165, protein: 31, carbs: 0, fat: 3.6, serving: "100g"},
-                    {name: "Salmón", calories: 208, protein: 20, carbs: 0, fat: 13, serving: "100g"},
-                    {name: "Carne magra de res", calories: 250, protein: 26, carbs: 0, fat: 15, serving: "100g"},
-                    {name: "Huevos", calories: 70, protein: 6, carbs: 0.6, fat: 5, serving: "1 huevo"},
-                    {name: "Atún en agua", calories: 100, protein: 22, carbs: 0, fat: 1, serving: "100g"},
-                    {name: "Pavo", calories: 135, protein: 29, carbs: 0, fat: 3, serving: "100g"},
-                    {name: "Queso cottage", calories: 98, protein: 11, carbs: 3.4, fat: 4.3, serving: "100g"}
-                ],
-                carbs: [
-                    {name: "Arroz integral", calories: 111, protein: 2.6, carbs: 23, fat: 0.9, serving: "100g cocido"},
-                    {name: "Quinoa", calories: 120, protein: 4.4, carbs: 21.3, fat: 1.9, serving: "100g cocido"},
-                    {name: "Avena", calories: 68, protein: 2.4, carbs: 12, fat: 1.4, serving: "100g cocido"},
-                    {name: "Pan integral", calories: 69, protein: 3.6, carbs: 12, fat: 1, serving: "1 rebanada"},
-                    {name: "Batata", calories: 86, protein: 1.6, carbs: 20, fat: 0.1, serving: "100g cocido"},
-                    {name: "Pasta integral", calories: 124, protein: 5, carbs: 25, fat: 1, serving: "100g cocido"}
-                ],
-                fats: [
-                    {name: "Aguacate", calories: 160, protein: 2, carbs: 9, fat: 15, serving: "100g"},
-                    {name: "Almendras", calories: 579, protein: 21, carbs: 22, fat: 50, serving: "100g"},
-                    {name: "Mantequilla de maní", calories: 588, protein: 25, carbs: 20, fat: 50, serving: "100g"},
-                    {name: "Aceite de oliva", calories: 884, protein: 0, carbs: 0, fat: 100, serving: "100g"},
-                    {name: "Nueces", calories: 654, protein: 15, carbs: 14, fat: 65, serving: "100g"}
-                ],
-                vegetables: [
-                    {name: "Brócoli", calories: 34, protein: 2.8, carbs: 6.6, fat: 0.4, serving: "100g"},
-                    {name: "Espinaca", calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4, serving: "100g"},
-                    {name: "Zanahorias", calories: 41, protein: 0.9, carbs: 10, fat: 0.2, serving: "100g"},
-                    {name: "Pimientos", calories: 31, protein: 1, carbs: 6, fat: 0.3, serving: "100g"},
-                    {name: "Tomates", calories: 18, protein: 0.9, carbs: 3.9, fat: 0.2, serving: "100g"}
-                ],
-                fruits: [
-                    {name: "Plátano", calories: 89, protein: 1.1, carbs: 22.8, fat: 0.3, serving: "100g"},
-                    {name: "Manzana", calories: 52, protein: 0.3, carbs: 14, fat: 0.2, serving: "100g"},
-                    {name: "Fresas", calories: 32, protein: 0.7, carbs: 7.7, fat: 0.3, serving: "100g"},
-                    {name: "Arándanos", calories: 57, protein: 0.7, carbs: 14.5, fat: 0.3, serving: "100g"},
-                    {name: "Naranja", calories: 47, protein: 0.9, carbs: 11.8, fat: 0.1, serving: "100g"}
-                ]
-            },
-            vegetarian: {
-                proteins: [
-                    {name: "Huevos", calories: 70, protein: 6, carbs: 0.6, fat: 5, serving: "1 huevo"},
-                    {name: "Queso cottage", calories: 98, protein: 11, carbs: 3.4, fat: 4.3, serving: "100g"},
-                    {name: "Yogur griego", calories: 59, protein: 10, carbs: 3.6, fat: 0.4, serving: "100g"},
-                    {name: "Tofu", calories: 76, protein: 8, carbs: 1.9, fat: 4.8, serving: "100g"},
-                    {name: "Tempeh", calories: 193, protein: 19, carbs: 9, fat: 11, serving: "100g"},
-                    {name: "Lentejas", calories: 116, protein: 9, carbs: 20, fat: 0.4, serving: "100g cocido"},
-                    {name: "Quinoa", calories: 120, protein: 4.4, carbs: 21.3, fat: 1.9, serving: "100g cocido"}
-                ],
-                carbs: [
-                    {name: "Arroz integral", calories: 111, protein: 2.6, carbs: 23, fat: 0.9, serving: "100g cocido"},
-                    {name: "Quinoa", calories: 120, protein: 4.4, carbs: 21.3, fat: 1.9, serving: "100g cocido"},
-                    {name: "Avena", calories: 68, protein: 2.4, carbs: 12, fat: 1.4, serving: "100g cocido"},
-                    {name: "Pan integral", calories: 69, protein: 3.6, carbs: 12, fat: 1, serving: "1 rebanada"},
-                    {name: "Batata", calories: 86, protein: 1.6, carbs: 20, fat: 0.1, serving: "100g cocido"},
-                    {name: "Pasta integral", calories: 124, protein: 5, carbs: 25, fat: 1, serving: "100g cocido"}
-                ],
-                fats: [
-                    {name: "Aguacate", calories: 160, protein: 2, carbs: 9, fat: 15, serving: "100g"},
-                    {name: "Almendras", calories: 579, protein: 21, carbs: 22, fat: 50, serving: "100g"},
-                    {name: "Mantequilla de maní", calories: 588, protein: 25, carbs: 20, fat: 50, serving: "100g"},
-                    {name: "Aceite de oliva", calories: 884, protein: 0, carbs: 0, fat: 100, serving: "100g"},
-                    {name: "Nueces", calories: 654, protein: 15, carbs: 14, fat: 65, serving: "100g"}
-                ],
-                vegetables: [
-                    {name: "Brócoli", calories: 34, protein: 2.8, carbs: 6.6, fat: 0.4, serving: "100g"},
-                    {name: "Espinaca", calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4, serving: "100g"},
-                    {name: "Zanahorias", calories: 41, protein: 0.9, carbs: 10, fat: 0.2, serving: "100g"},
-                    {name: "Pimientos", calories: 31, protein: 1, carbs: 6, fat: 0.3, serving: "100g"},
-                    {name: "Tomates", calories: 18, protein: 0.9, carbs: 3.9, fat: 0.2, serving: "100g"}
-                ],
-                fruits: [
-                    {name: "Plátano", calories: 89, protein: 1.1, carbs: 22.8, fat: 0.3, serving: "100g"},
-                    {name: "Manzana", calories: 52, protein: 0.3, carbs: 14, fat: 0.2, serving: "100g"},
-                    {name: "Fresas", calories: 32, protein: 0.7, carbs: 7.7, fat: 0.3, serving: "100g"},
-                    {name: "Arándanos", calories: 57, protein: 0.7, carbs: 14.5, fat: 0.3, serving: "100g"},
-                    {name: "Naranja", calories: 47, protein: 0.9, carbs: 11.8, fat: 0.1, serving: "100g"}
-                ]
-            },
-            vegan: {
-                proteins: [
-                    {name: "Tofu", calories: 76, protein: 8, carbs: 1.9, fat: 4.8, serving: "100g"},
-                    {name: "Tempeh", calories: 193, protein: 19, carbs: 9, fat: 11, serving: "100g"},
-                    {name: "Lentejas", calories: 116, protein: 9, carbs: 20, fat: 0.4, serving: "100g cocido"},
-                    {name: "Garbanzos", calories: 164, protein: 9, carbs: 27, fat: 2.6, serving: "100g cocido"},
-                    {name: "Seitán", calories: 120, protein: 24, carbs: 4, fat: 1, serving: "100g"},
-                    {name: "Edamame", calories: 122, protein: 11, carbs: 10, fat: 5, serving: "100g cocido"}
-                ],
-                carbs: [
-                    {name: "Arroz integral", calories: 111, protein: 2.6, carbs: 23, fat: 0.9, serving: "100g cocido"},
-                    {name: "Quinoa", calories: 120, protein: 4.4, carbs: 21.3, fat: 1.9, serving: "100g cocido"},
-                    {name: "Avena", calories: 68, protein: 2.4, carbs: 12, fat: 1.4, serving: "100g cocido"},
-                    {name: "Batata", calories: 86, protein: 1.6, carbs: 20, fat: 0.1, serving: "100g cocido"},
-                    {name: "Pasta integral", calories: 124, protein: 5, carbs: 25, fat: 1, serving: "100g cocido"}
-                ],
-                fats: [
-                    {name: "Aguacate", calories: 160, protein: 2, carbs: 9, fat: 15, serving: "100g"},
-                    {name: "Almendras", calories: 579, protein: 21, carbs: 22, fat: 50, serving: "100g"},
-                    {name: "Mantequilla de almendras", calories: 614, protein: 21, carbs: 19, fat: 55, serving: "100g"},
-                    {name: "Aceite de oliva", calories: 884, protein: 0, carbs: 0, fat: 100, serving: "100g"},
-                    {name: "Nueces", calories: 654, protein: 15, carbs: 14, fat: 65, serving: "100g"}
-                ],
-                vegetables: [
-                    {name: "Brócoli", calories: 34, protein: 2.8, carbs: 6.6, fat: 0.4, serving: "100g"},
-                    {name: "Espinaca", calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4, serving: "100g"},
-                    {name: "Zanahorias", calories: 41, protein: 0.9, carbs: 10, fat: 0.2, serving: "100g"},
-                    {name: "Pimientos", calories: 31, protein: 1, carbs: 6, fat: 0.3, serving: "100g"},
-                    {name: "Tomates", calories: 18, protein: 0.9, carbs: 3.9, fat: 0.2, serving: "100g"}
-                ],
-                fruits: [
-                    {name: "Plátano", calories: 89, protein: 1.1, carbs: 22.8, fat: 0.3, serving: "100g"},
-                    {name: "Manzana", calories: 52, protein: 0.3, carbs: 14, fat: 0.2, serving: "100g"},
-                    {name: "Fresas", calories: 32, protein: 0.7, carbs: 7.7, fat: 0.3, serving: "100g"},
-                    {name: "Arándanos", calories: 57, protein: 0.7, carbs: 14.5, fat: 0.3, serving: "100g"},
-                    {name: "Naranja", calories: 47, protein: 0.9, carbs: 11.8, fat: 0.1, serving: "100g"}
-                ]
-            },
-            keto: {
-                proteins: [
-                    {name: "Carne de res", calories: 250, protein: 26, carbs: 0, fat: 15, serving: "100g"},
-                    {name: "Pollo con piel", calories: 239, protein: 27, carbs: 0, fat: 14, serving: "100g"},
-                    {name: "Salmón", calories: 208, protein: 20, carbs: 0, fat: 13, serving: "100g"},
-                    {name: "Huevos", calories: 70, protein: 6, carbs: 0.6, fat: 5, serving: "1 huevo"},
-                    {name: "Queso cheddar", calories: 403, protein: 25, carbs: 1.3, fat: 33, serving: "100g"}
-                ],
-                carbs: [
-                    {name: "Coliflor", calories: 25, protein: 1.9, carbs: 5, fat: 0.3, serving: "100g"},
-                    {name: "Brócoli", calories: 34, protein: 2.8, carbs: 6.6, fat: 0.4, serving: "100g"},
-                    {name: "Espinaca", calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4, serving: "100g"},
-                    {name: "Calabacín", calories: 17, protein: 1.2, carbs: 3.1, fat: 0.3, serving: "100g"}
-                ],
-                fats: [
-                    {name: "Aguacate", calories: 160, protein: 2, carbs: 9, fat: 15, serving: "100g"},
-                    {name: "Aceite de oliva", calories: 884, protein: 0, carbs: 0, fat: 100, serving: "100g"},
-                    {name: "Mantequilla", calories: 717, protein: 0.9, carbs: 0.1, fat: 81, serving: "100g"},
-                    {name: "Nueces", calories: 654, protein: 15, carbs: 14, fat: 65, serving: "100g"},
-                    {name: "Almendras", calories: 579, protein: 21, carbs: 22, fat: 50, serving: "100g"}
-                ],
-                vegetables: [
-                    {name: "Coliflor", calories: 25, protein: 1.9, carbs: 5, fat: 0.3, serving: "100g"},
-                    {name: "Espinaca", calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4, serving: "100g"},
-                    {name: "Brócoli", calories: 34, protein: 2.8, carbs: 6.6, fat: 0.4, serving: "100g"},
-                    {name: "Calabacín", calories: 17, protein: 1.2, carbs: 3.1, fat: 0.3, serving: "100g"}
-                ],
-                fruits: [
-                    {name: "Fresas", calories: 32, protein: 0.7, carbs: 7.7, fat: 0.3, serving: "100g"},
-                    {name: "Arándanos", calories: 57, protein: 0.7, carbs: 14.5, fat: 0.3, serving: "100g"}
-                ]
-            },
-            low_carb: {
-                proteins: [
-                    {name: "Pechuga de pollo", calories: 165, protein: 31, carbs: 0, fat: 3.6, serving: "100g"},
-                    {name: "Salmón", calories: 208, protein: 20, carbs: 0, fat: 13, serving: "100g"},
-                    {name: "Huevos", calories: 70, protein: 6, carbs: 0.6, fat: 5, serving: "1 huevo"},
-                    {name: "Tofu", calories: 76, protein: 8, carbs: 1.9, fat: 4.8, serving: "100g"},
-                    {name: "Queso cottage", calories: 98, protein: 11, carbs: 3.4, fat: 4.3, serving: "100g"}
-                ],
-                carbs: [
-                    {name: "Brócoli", calories: 34, protein: 2.8, carbs: 6.6, fat: 0.4, serving: "100g"},
-                    {name: "Espinaca", calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4, serving: "100g"},
-                    {name: "Coliflor", calories: 25, protein: 1.9, carbs: 5, fat: 0.3, serving: "100g"}
-                ],
-                fats: [
-                    {name: "Aguacate", calories: 160, protein: 2, carbs: 9, fat: 15, serving: "100g"},
-                    {name: "Almendras", calories: 579, protein: 21, carbs: 22, fat: 50, serving: "100g"},
-                    {name: "Aceite de oliva", calories: 884, protein: 0, carbs: 0, fat: 100, serving: "100g"}
-                ],
-                vegetables: [
-                    {name: "Brócoli", calories: 34, protein: 2.8, carbs: 6.6, fat: 0.4, serving: "100g"},
-                    {name: "Espinaca", calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4, serving: "100g"},
-                    {name: "Pimientos", calories: 31, protein: 1, carbs: 6, fat: 0.3, serving: "100g"}
-                ],
-                fruits: [
-                    {name: "Fresas", calories: 32, protein: 0.7, carbs: 7.7, fat: 0.3, serving: "100g"},
-                    {name: "Arándanos", calories: 57, protein: 0.7, carbs: 14.5, fat: 0.3, serving: "100g"}
-                ]
-            },
-            mediterranean: {
-                proteins: [
-                    {name: "Pescado (salmón, atún)", calories: 208, protein: 20, carbs: 0, fat: 13, serving: "100g"},
-                    {name: "Pollo", calories: 165, protein: 31, carbs: 0, fat: 3.6, serving: "100g"},
-                    {name: "Legumbres", calories: 116, protein: 9, carbs: 20, fat: 0.4, serving: "100g cocido"},
-                    {name: "Huevos", calories: 70, protein: 6, carbs: 0.6, fat: 5, serving: "1 huevo"},
-                    {name: "Queso feta", calories: 264, protein: 14, carbs: 4, fat: 21, serving: "100g"}
-                ],
-                carbs: [
-                    {name: "Pan integral", calories: 69, protein: 3.6, carbs: 12, fat: 1, serving: "1 rebanada"},
-                    {name: "Arroz integral", calories: 111, protein: 2.6, carbs: 23, fat: 0.9, serving: "100g cocido"},
-                    {name: "Quinoa", calories: 120, protein: 4.4, carbs: 21.3, fat: 1.9, serving: "100g cocido"},
-                    {name: "Pasta integral", calories: 124, protein: 5, carbs: 25, fat: 1, serving: "100g cocido"},
-                    {name: "Batata", calories: 86, protein: 1.6, carbs: 20, fat: 0.1, serving: "100g cocido"}
-                ],
-                fats: [
-                    {name: "Aceite de oliva", calories: 884, protein: 0, carbs: 0, fat: 100, serving: "100g"},
-                    {name: "Aguacate", calories: 160, protein: 2, carbs: 9, fat: 15, serving: "100g"},
-                    {name: "Almendras", calories: 579, protein: 21, carbs: 22, fat: 50, serving: "100g"},
-                    {name: "Nueces", calories: 654, protein: 15, carbs: 14, fat: 65, serving: "100g"},
-                    {name: "Semillas de chía", calories: 486, protein: 16, carbs: 42, fat: 31, serving: "100g"}
-                ],
-                vegetables: [
-                    {name: "Tomates", calories: 18, protein: 0.9, carbs: 3.9, fat: 0.2, serving: "100g"},
-                    {name: "Pepino", calories: 15, protein: 0.7, carbs: 3.6, fat: 0.1, serving: "100g"},
-                    {name: "Espinaca", calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4, serving: "100g"},
-                    {name: "Pimientos", calories: 31, protein: 1, carbs: 6, fat: 0.3, serving: "100g"},
-                    {name: "Berenjena", calories: 25, protein: 1, carbs: 6, fat: 0.2, serving: "100g"}
-                ],
-                fruits: [
-                    {name: "Manzana", calories: 52, protein: 0.3, carbs: 14, fat: 0.2, serving: "100g"},
-                    {name: "Naranja", calories: 47, protein: 0.9, carbs: 11.8, fat: 0.1, serving: "100g"},
-                    {name: "Higos", calories: 74, protein: 0.8, carbs: 19, fat: 0.3, serving: "100g"},
-                    {name: "Uvas", calories: 69, protein: 0.7, carbs: 18, fat: 0.2, serving: "100g"},
-                    {name: "Fresas", calories: 32, protein: 0.7, carbs: 7.7, fat: 0.3, serving: "100g"}
-                ]
-            }
+        
+        // Factores de género (mujeres suelen levantar ~60-85% de lo que levantan hombres en promedio)
+        const GENDER_FACTORS = {
+            male: 1.0,
+            female: 0.7  // Ajuste basado en diferencias de fuerza promedio
         };
-
-        // Función para calcular las necesidades calóricas basadas en la ecuación de Harris-Benedict
-        function calculateCalories(weight, height, age, gender, activity) {
-            let bmr;
-            if (gender === "male") {
-                bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
-            } else {
-                bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
-            }
-            return Math.round(bmr * activity);
-        }
-
-        // Función para calcular la distribución de macros
-        function calculateMacros(calories, diet) {
-            let protein, carbs, fat;
+        
+        // Factores de experiencia (rango de repeticiones para hipertrofia)
+        const EXPERIENCE_FACTORS = {
+            beginner: 0.8,   // 60-70% 1RM (8-12 repeticiones)
+            intermediate: 0.85, // 70-75% 1RM (6-10 repeticiones)
+            advanced: 0.9     // 75-80% 1RM (4-8 repeticiones)
+        };
+        
+        // Función para calcular pesos basados en estándares de fuerza por género
+        const calculateWeights = () => {
+            // Obtener valores
+            const gender = document.getElementById('gender-select').value;
+            const weight = parseFloat(document.getElementById('weight-input').value);
+            const height = parseFloat(document.getElementById('height-input').value);
+            const experience = document.getElementById('experience-select').value;
             
-            switch(diet) {
-                case "keto":
-                    protein = 0.25;
-                    carbs = 0.05;
-                    fat = 0.70;
-                    break;
-                case "low_carb":
-                    protein = 0.30;
-                    carbs = 0.20;
-                    fat = 0.50;
-                    break;
-                case "standard":
-                case "vegetarian":
-                    protein = 0.30;
-                    carbs = 0.40;
-                    fat = 0.30;
-                    break;
-                case "vegan":
-                    protein = 0.25;
-                    carbs = 0.45;
-                    fat = 0.30;
-                    break;
-                case "mediterranean":
-                    protein = 0.20; // 20% de las calorías
-                    carbs = 0.50;   // 50% de las calorías
-                    fat = 0.30;     // 30% de las calorías
-                    break;
-                default:
-                    protein = 0.30;
-                    carbs = 0.40;
-                    fat = 0.30;
-            }
+            // Factores de cálculo
+            const genderFactor = GENDER_FACTORS[gender];
+            const experienceFactor = EXPERIENCE_FACTORS[experience];
+            const heightFactor = height / 170; // Normalización para estatura
             
-            // Calcular gramos de cada macro
-            const proteinGrams = Math.round((calories * protein) / 4);
-            const carbGrams = Math.round((calories * carbs) / 4);
-            const fatGrams = Math.round((calories * fat) / 9);
-            
-            return {
-                protein: proteinGrams,
-                carbs: carbGrams,
-                fat: fatGrams,
-                calories: Math.round(calories)
-            };
-        }
-
-        // Función para generar un plan de comidas
-        function generateMealPlan(macros, diet, mealsPerDay) {
-            const days = [];
-            const shoppingList = {
-                proteins: new Set(),
-                carbs: new Set(),
-                fats: new Set(),
-                vegetables: new Set(),
-                fruits: new Set()
+            // Rangos típicos de % de peso corporal para hipertrofia (ajustados por género)
+            const exercises = {
+                squat: { male: 1.2, female: 0.9 },       // Sentadilla (% peso corporal)
+                bench: { male: 0.9, female: 0.6 },        // Press banca
+                deadlift: { male: 1.5, female: 1.1 },     // Peso muerto
+                militaryPress: { male: 0.7, female: 0.5 },// Press militar
+                biceps: { male: 0.4, female: 0.3 },       // Curl bíceps
+                triceps: { male: 0.5, female: 0.35 },     // Extensión tríceps
+                back: { male: 0.8, female: 0.6 },         // Remo
+                pullup: { male: 0.7, female: 0.5 },       // Dominadas (peso asistido)
+                lunge: { male: 0.6, female: 0.45 },       // Zancadas
+                plank: { male: 0.3, female: 0.25 }        // Peso añadido en plancha
             };
             
-            for (let day = 1; day <= 5; day++) {
-                const dayPlan = {
-                    meals: [],
-                    totals: {calories: 0, protein: 0, carbs: 0, fat: 0}
-                };
-                
-                // Determinar cuántas comidas principales y snacks
-                const mainMeals = Math.min(3, mealsPerDay);
-                const snacks = mealsPerDay - mainMeals;
-                
-                // Distribuir macros entre comidas
-                const mealMacros = {
-                    protein: Math.round(macros.protein / mealsPerDay),
-                    carbs: Math.round(macros.carbs / mealsPerDay),
-                    fat: Math.round(macros.fat / mealsPerDay),
-                    calories: Math.round(macros.calories / mealsPerDay)
-                };
-                
-                // Generar comidas principales
-                const mealNames = ["Desayuno", "Almuerzo", "Cena"];
-                for (let i = 0; i < mainMeals; i++) {
-                    const meal = generateMeal(mealMacros, diet, mealNames[i]);
-                    dayPlan.meals.push(meal);
-                    
-                    // Actualizar totales
-                    dayPlan.totals.calories += meal.calories;
-                    dayPlan.totals.protein += meal.protein;
-                    dayPlan.totals.carbs += meal.carbs;
-                    dayPlan.totals.fat += meal.fat;
-                    
-                    // Agregar a lista de compras
-                    meal.foods.forEach(food => {
-                        const category = getFoodCategory(food.name, diet);
-                        if (category) shoppingList[category].add(food.name);
-                    });
-                }
-                
-                // Generar snacks
-                for (let i = 0; i < snacks; i++) {
-                    const snack = generateSnack(mealMacros, diet);
-                    dayPlan.meals.push(snack);
-                    
-                    // Actualizar totales
-                    dayPlan.totals.calories += snack.calories;
-                    dayPlan.totals.protein += snack.protein;
-                    dayPlan.totals.carbs += snack.carbs;
-                    dayPlan.totals.fat += snack.fat;
-                    
-                    // Agregar a lista de compras
-                    snack.foods.forEach(food => {
-                        const category = getFoodCategory(food.name, diet);
-                        if (category) shoppingList[category].add(food.name);
-                    });
-                }
-                
-                days.push(dayPlan);
-            }
-            
-            return {days, shoppingList};
-        }
-
-        // Función para generar una comida
-        function generateMeal(macros, diet, mealName) {
-            const meal = {
-                name: mealName,
-                foods: [],
-                calories: 0,
-                protein: 0,
-                carbs: 0,
-                fat: 0
+            // Calcular pesos para hipertrofia (8-12 repeticiones)
+            const getExerciseWeight = (exercise) => {
+                const base = weight * exercises[exercise][gender] * experienceFactor * heightFactor;
+                return Math.round(base / 2.5) * 2.5; // Redondear a múltiplos de 2.5kg
             };
             
-            const dietFoods = foodDatabase[diet] || foodDatabase.standard;
+            // Actualizar UI
+            document.getElementById('squat-weight').textContent = `${getExerciseWeight('squat')} kg`;
+            document.getElementById('bench-weight').textContent = `${getExerciseWeight('bench')} kg`;
+            document.getElementById('deadlift-weight').textContent = `${getExerciseWeight('deadlift')} kg`;
+            document.getElementById('military-press-weight').textContent = `${getExerciseWeight('militaryPress')} kg`;
+            document.getElementById('biceps-weight').textContent = `${getExerciseWeight('biceps')} kg`;
+            document.getElementById('triceps-weight').textContent = `${getExerciseWeight('triceps')} kg`;
+            document.getElementById('back-weight').textContent = `${getExerciseWeight('back')} kg`;
+            document.getElementById('pullup-weight').textContent = gender === 'female' 
+                ? `Asistido: ${getExerciseWeight('pullup')} kg` 
+                : `${getExerciseWeight('pullup')} kg`;
+            document.getElementById('lunge-weight').textContent = `${getExerciseWeight('lunge')} kg`;
+            document.getElementById('plank-weight').textContent = gender === 'female'
+                ? `Peso corporal + ${getExerciseWeight('plank')} kg`
+                : `Peso corporal + ${getExerciseWeight('plank')} kg`;
+        };
+        
+        // Mostrar/ocultar ejercicios adicionales
+        document.getElementById('show-more-button').addEventListener('click', function() {
+            const extraResults = document.getElementById('extra-results');
+            const button = document.getElementById('show-more-button');
             
-            // Seleccionar una proteína
-            const proteinOptions = dietFoods.proteins;
-            const protein = proteinOptions[Math.floor(Math.random() * proteinOptions.length)];
-            const proteinAmount = Math.max(50, Math.min(200, Math.round(macros.protein * 0.7 / protein.protein * 100)));
-            
-            meal.foods.push({
-                name: protein.name,
-                amount: proteinAmount,
-                serving: protein.serving,
-                calories: Math.round(protein.calories * proteinAmount / 100),
-                protein: Math.round(protein.protein * proteinAmount / 100),
-                carbs: Math.round(protein.carbs * proteinAmount / 100),
-                fat: Math.round(protein.fat * proteinAmount / 100)
-            });
-            
-            meal.calories += meal.foods[0].calories;
-            meal.protein += meal.foods[0].protein;
-            meal.carbs += meal.foods[0].carbs;
-            meal.fat += meal.foods[0].fat;
-            
-            // Seleccionar un carbohidrato (excepto para keto)
-            if (diet !== "keto") {
-                if (diet === "low_carb") {
-                    const carbOptions = dietFoods.carbs.filter(carb => carb.carbs <= 10); // Filtrar carbohidratos bajos
-                    if (carbOptions.length > 0) {
-                        const carb = carbOptions[Math.floor(Math.random() * carbOptions.length)];
-                        const carbAmount = Math.max(50, Math.min(150, Math.round(macros.carbs * 0.7 / carb.carbs * 100)));
-                        
-                        meal.foods.push({
-                            name: carb.name,
-                            amount: carbAmount,
-                            serving: carb.serving,
-                            calories: Math.round(carb.calories * carbAmount / 100),
-                            protein: Math.round(carb.protein * carbAmount / 100),
-                            carbs: Math.round(carb.carbs * carbAmount / 100),
-                            fat: Math.round(carb.fat * carbAmount / 100)
-                        });
-                        
-                        meal.calories += meal.foods[1].calories;
-                        meal.protein += meal.foods[1].protein;
-                        meal.carbs += meal.foods[1].carbs;
-                        meal.fat += meal.foods[1].fat;
-                    }
-                } else {
-                    const carbOptions = dietFoods.carbs;
-                    const carb = carbOptions[Math.floor(Math.random() * carbOptions.length)];
-                    const carbAmount = Math.max(50, Math.min(150, Math.round(macros.carbs * 0.7 / carb.carbs * 100)));
-                    
-                    meal.foods.push({
-                        name: carb.name,
-                        amount: carbAmount,
-                        serving: carb.serving,
-                        calories: Math.round(carb.calories * carbAmount / 100),
-                        protein: Math.round(carb.protein * carbAmount / 100),
-                        carbs: Math.round(carb.carbs * carbAmount / 100),
-                        fat: Math.round(carb.fat * carbAmount / 100)
-                    });
-                    
-                    meal.calories += meal.foods[1].calories;
-                    meal.protein += meal.foods[1].protein;
-                    meal.carbs += meal.foods[1].carbs;
-                    meal.fat += meal.foods[1].fat;
-                }
+            if (extraResults.style.display === 'none' || !extraResults.style.display) {
+                extraResults.style.display = 'block';
+                button.textContent = '▲ Mostrar menos';
+                // Desplazamiento suave para móviles
+                extraResults.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } else {
-                const carbOptions = dietFoods.carbs.filter(carb => carb.carbs <= 10); // Filtrar carbohidratos bajos
-                if (carbOptions.length > 0) {
-                    const carb = carbOptions[Math.floor(Math.random() * carbOptions.length)];
-                    const carbAmount = Math.max(50, Math.min(100, Math.round(macros.carbs * 0.5 / carb.carbs * 100)));
-                    
-                    meal.foods.push({
-                        name: carb.name,
-                        amount: carbAmount,
-                        serving: carb.serving,
-                        calories: Math.round(carb.calories * carbAmount / 100),
-                        protein: Math.round(carb.protein * carbAmount / 100),
-                        carbs: Math.round(carb.carbs * carbAmount / 100),
-                        fat: Math.round(carb.fat * carbAmount / 100)
-                    });
-                    
-                    meal.calories += meal.foods[1].calories;
-                    meal.protein += meal.foods[1].protein;
-                    meal.carbs += meal.foods[1].carbs;
-                    meal.fat += meal.foods[1].fat;
-                }
+                extraResults.style.display = 'none';
+                button.textContent = '▼ Mostrar más ejercicios';
             }
-            
-            // Seleccionar una grasa
-            const fatOptions = dietFoods.fats;
-            const fat = fatOptions[Math.floor(Math.random() * fatOptions.length)];
-            const fatAmount = Math.max(10, Math.min(50, Math.round(macros.fat * 0.5 / fat.fat * 100)));
-            
-            meal.foods.push({
-                name: fat.name,
-                amount: fatAmount,
-                serving: fat.serving,
-                calories: Math.round(fat.calories * fatAmount / 100),
-                protein: Math.round(fat.protein * fatAmount / 100),
-                carbs: Math.round(fat.carbs * fatAmount / 100),
-                fat: Math.round(fat.fat * fatAmount / 100)
-            });
-            
-            meal.calories += meal.foods[meal.foods.length - 1].calories;
-            meal.protein += meal.foods[meal.foods.length - 1].protein;
-            meal.carbs += meal.foods[meal.foods.length - 1].carbs;
-            meal.fat += meal.foods[meal.foods.length - 1].fat;
-            
-            // Agregar vegetales
-            const vegOptions = dietFoods.vegetables;
-            const veg1 = vegOptions[Math.floor(Math.random() * vegOptions.length)];
-            const veg2 = vegOptions[Math.floor(Math.random() * vegOptions.length)];
-            
-            const vegAmount = 100; // 100g por vegetal
-            
-            meal.foods.push({
-                name: veg1.name,
-                amount: vegAmount,
-                serving: veg1.serving,
-                calories: Math.round(veg1.calories * vegAmount / 100),
-                protein: Math.round(veg1.protein * vegAmount / 100),
-                carbs: Math.round(veg1.carbs * vegAmount / 100),
-                fat: Math.round(veg1.fat * vegAmount / 100)
-            });
-            
-            if (veg1.name !== veg2.name) {
-                meal.foods.push({
-                    name: veg2.name,
-                    amount: vegAmount,
-                    serving: veg2.serving,
-                    calories: Math.round(veg2.calories * vegAmount / 100),
-                    protein: Math.round(veg2.protein * vegAmount / 100),
-                    carbs: Math.round(veg2.carbs * vegAmount / 100),
-                    fat: Math.round(veg2.fat * vegAmount / 100)
-                });
-            }
-            
-            meal.calories += meal.foods[meal.foods.length - 1].calories;
-            meal.protein += meal.foods[meal.foods.length - 1].protein;
-            meal.carbs += meal.foods[meal.foods.length - 1].carbs;
-            meal.fat += meal.foods[meal.foods.length - 1].fat;
-            
-            if (veg1.name !== veg2.name) {
-                meal.calories += meal.foods[meal.foods.length - 2].calories;
-                meal.protein += meal.foods[meal.foods.length - 2].protein;
-                meal.carbs += meal.foods[meal.foods.length - 2].carbs;
-                meal.fat += meal.foods[meal.foods.length - 2].fat;
-            }
-            
-            return meal;
-        }
-
-        // Función para generar un snack
-        function generateSnack(macros, diet) {
-            const snack = {
-                name: "Merienda",
-                foods: [],
-                calories: 0,
-                protein: 0,
-                carbs: 0,
-                fat: 0
-            };
-            
-            const dietFoods = foodDatabase[diet] || foodDatabase.standard;
-            
-            // Para snacks, combinamos una fruta con una proteína o grasa
-            const fruitOptions = dietFoods.fruits;
-            const fruit = fruitOptions[Math.floor(Math.random() * fruitOptions.length)];
-            const fruitAmount = 100; // 100g
-            
-            snack.foods.push({
-                name: fruit.name,
-                amount: fruitAmount,
-                serving: fruit.serving,
-                calories: Math.round(fruit.calories * fruitAmount / 100),
-                protein: Math.round(fruit.protein * fruitAmount / 100),
-                carbs: Math.round(fruit.carbs * fruitAmount / 100),
-                fat: Math.round(fruit.fat * fruitAmount / 100)
-            });
-            
-            snack.calories += snack.foods[0].calories;
-            snack.protein += snack.foods[0].protein;
-            snack.carbs += snack.foods[0].carbs;
-            snack.fat += snack.foods[0].fat;
-            
-            // Agregar una proteína o grasa
-            const addProtein = Math.random() > 0.5;
-            
-            if (addProtein) {
-                const proteinOptions = dietFoods.proteins.filter(p => 
-                    p.name.includes("yogur") || p.name.includes("queso") || p.name.includes("huevo")
-                );
-                
-                if (proteinOptions.length > 0) {
-                    const protein = proteinOptions[Math.floor(Math.random() * proteinOptions.length)];
-                    const proteinAmount = 50; // 50g
-                    
-                    snack.foods.push({
-                        name: protein.name,
-                        amount: proteinAmount,
-                        serving: protein.serving,
-                        calories: Math.round(protein.calories * proteinAmount / 100),
-                        protein: Math.round(protein.protein * proteinAmount / 100),
-                        carbs: Math.round(protein.carbs * proteinAmount / 100),
-                        fat: Math.round(protein.fat * proteinAmount / 100)
-                    });
-                    
-                    snack.calories += snack.foods[1].calories;
-                    snack.protein += snack.foods[1].protein;
-                    snack.carbs += snack.foods[1].carbs;
-                    snack.fat += snack.foods[1].fat;
-                }
-            } else {
-                const fatOptions = dietFoods.fats.filter(f => 
-                    f.name.includes("mantequilla") || f.name.includes("nueces") || f.name.includes("almendras")
-                );
-                
-                if (fatOptions.length > 0) {
-                    const fat = fatOptions[Math.floor(Math.random() * fatOptions.length)];
-                    const fatAmount = 20; // 20g
-                    
-                    snack.foods.push({
-                        name: fat.name,
-                        amount: fatAmount,
-                        serving: fat.serving,
-                        calories: Math.round(fat.calories * fatAmount / 100),
-                        protein: Math.round(fat.protein * fatAmount / 100),
-                        carbs: Math.round(fat.carbs * fatAmount / 100),
-                        fat: Math.round(fat.fat * fatAmount / 100)
-                    });
-                    
-                    snack.calories += snack.foods[1].calories;
-                    snack.protein += snack.foods[1].protein;
-                    snack.carbs += snack.foods[1].carbs;
-                    snack.fat += snack.foods[1].fat;
-                }
-            }
-            
-            return snack;
-        }
-
-        // Función para determinar la categoría de un alimento
-        function getFoodCategory(foodName, diet) {
-            const dietFoods = foodDatabase[diet] || foodDatabase.standard;
-            
-            for (const category in dietFoods) {
-                if (dietFoods[category].some(food => food.name === foodName)) {
-                    return category;
-                }
-            }
-            return null;
-        }
-
-        // Función para renderizar el plan de comidas
-        function renderMealPlan(plan) {
-            // Mostrar macros totales
-            document.getElementById('total-calories').textContent = plan.macros.calories;
-            document.getElementById('total-protein').textContent = plan.macros.protein + ' g';
-            document.getElementById('total-carbs').textContent = plan.macros.carbs + ' g';
-            document.getElementById('total-fat').textContent = plan.macros.fat + ' g';
-            
-            // Renderizar cada día
-            plan.days.forEach((day, index) => {
-                const dayElement = document.getElementById(`day${index + 1}`);
-                dayElement.innerHTML = '';
-                
-                const dayTitle = document.createElement('h3');
-                dayTitle.textContent = `Día ${index + 1}`;
-                dayElement.appendChild(dayTitle);
-                
-                // Totales del día
-                const macrosTotal = document.createElement('div');
-                macrosTotal.className = 'macros-total';
-                macrosTotal.innerHTML = `
-                    <h4>Totales de macronutrientes</h4>
-                    <p><strong>Calorías:</strong> ${day.totals.calories}</p>
-                    <p><strong>Proteína:</strong> ${day.totals.protein} g</p>
-                    <p><strong>Grasa:</strong> ${day.totals.fat} g</p>
-                    <p><strong>Carbohidratos:</strong> ${day.totals.carbs} g</p>
-                `;
-                dayElement.appendChild(macrosTotal);
-                
-                // Comidas del día
-                day.meals.forEach(meal => {
-                    const mealElement = document.createElement('div');
-                    mealElement.className = 'meal';
-                    
-                    const mealTitle = document.createElement('h4');
-                    mealTitle.textContent = meal.name;
-                    mealElement.appendChild(mealTitle);
-                    
-                    const mealMacros = document.createElement('div');
-                    mealMacros.className = 'meal-macros';
-                    mealMacros.innerHTML = `
-                        <p><strong>Calorías:</strong> ${meal.calories}</p>
-                        <p><strong>Proteína:</strong> ${meal.protein} g</p>
-                        <p><strong>Grasa:</strong> ${meal.fat} g</p>
-                        <p><strong>Carbohidratos:</strong> ${meal.carbs} g</p>
-                    `;
-                    mealElement.appendChild(mealMacros);
-                    
-                    // Alimentos de la comida
-                    meal.foods.forEach(food => {
-                        const foodItem = document.createElement('div');
-                        foodItem.className = 'food-item';
-                        foodItem.textContent = `${food.name} - ${food.amount} ${food.serving}`;
-                        mealElement.appendChild(foodItem);
-                    });
-                    
-                    dayElement.appendChild(mealElement);
-                });
-            });
-            
-            // Renderizar lista de compras
-            const shoppingListElement = document.getElementById('shopping-list');
-            shoppingListElement.innerHTML = '';
-            
-            for (const category in plan.shoppingList) {
-                if (plan.shoppingList[category].size > 0) {
-                    const categoryElement = document.createElement('div');
-                    categoryElement.className = 'shopping-category';
-                    
-                    const categoryTitle = document.createElement('h4');
-                    categoryTitle.textContent = getCategoryName(category);
-                    categoryElement.appendChild(categoryTitle);
-                    
-                    plan.shoppingList[category].forEach(item => {
-                        const itemElement = document.createElement('div');
-                        itemElement.className = 'food-item';
-                        itemElement.textContent = item;
-                        categoryElement.appendChild(itemElement);
-                    });
-                    
-                    shoppingListElement.appendChild(categoryElement);
-                }
-            }
-        }
-
-        // Función para obtener el nombre legible de la categoría
-        function getCategoryName(category) {
-            const names = {
-                proteins: 'Proteínas',
-                carbs: 'Carbohidratos',
-                fats: 'Grasas saludables',
-                vegetables: 'Verduras',
-                fruits: 'Frutas'
-            };
-            return names[category] || category;
-        }
-
-        // Función para validar el formulario
-        function validateForm() {
-            let isValid = true;
-            
-            const height = document.getElementById('height');
-            const weight = document.getElementById('weight');
-            const age = document.getElementById('age');
-            
-            const heightError = document.getElementById('height-error');
-            const weightError = document.getElementById('weight-error');
-            const ageError = document.getElementById('age-error');
-            
-            // Validar estatura (100-250 cm)
-            if (height.value < 100 || height.value > 250) {
-                height.classList.add('input-error');
-                heightError.style.display = 'block';
-                isValid = false;
-            } else {
-                height.classList.remove('input-error');
-                heightError.style.display = 'none';
-            }
-            
-            // Validar peso (30-200 kg)
-            if (weight.value < 30 || weight.value > 200) {
-                weight.classList.add('input-error');
-                weightError.style.display = 'block';
-                isValid = false;
-            } else {
-                weight.classList.remove('input-error');
-                weightError.style.display = 'none';
-            }
-            
-            // Validar edad (15-100 años)
-            if (age.value < 15 || age.value > 100) {
-                age.classList.add('input-error');
-                ageError.style.display = 'block';
-                isValid = false;
-            } else {
-                age.classList.remove('input-error');
-                ageError.style.display = 'none';
-            }
-            
-            return isValid;
-        }
-
-        // Manejar el envío del formulario
-        document.getElementById('macro-calculator').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (!validateForm()) {
-                return;
-            }
-            
-            // Mostrar loading
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('meal-plan-result').style.display = 'none';
-            
-            // Obtener valores del formulario
-            const height = parseFloat(document.getElementById('height').value);
-            const weight = parseFloat(document.getElementById('weight').value);
-            const age = parseInt(document.getElementById('age').value);
-            const gender = document.getElementById('gender').value;
-            const activity = parseFloat(document.getElementById('activity').value);
-            const goal = parseFloat(document.getElementById('goal').value);
-            const diet = document.getElementById('diet').value;
-            const mealsPerDay = parseInt(document.getElementById('meals-per-day').value);
-            
-            // Calcular necesidades calóricas
-            const maintenanceCalories = calculateCalories(weight, height, age, gender, activity);
-            const goalCalories = Math.round(maintenanceCalories * goal);
-            
-            // Calcular macros
-            const macros = calculateMacros(goalCalories, diet);
-            
-            // Generar plan de comidas
-            const mealPlan = generateMealPlan(macros, diet, mealsPerDay);
-            
-            // Combinar datos para renderizar
-            const planData = {
-                macros: macros,
-                days: mealPlan.days,
-                shoppingList: mealPlan.shoppingList
-            };
-            
-            // Simular tiempo de carga (en producción, esto sería instantáneo)
-            setTimeout(() => {
-                // Ocultar loading y mostrar resultados
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('meal-plan-result').style.display = 'block';
-                
-                // Renderizar plan de comidas
-                renderMealPlan(planData);
-                
-                // Desplazarse a los resultados
-                window.scrollTo({
-                    top: document.getElementById('meal-plan-result').offsetTop - 20,
-                    behavior: 'smooth'
-                });
-            }, 1500);
         });
-
-        // Manejar pestañas
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                // Remover clase active de todas las pestañas y contenidos
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                
-                // Agregar clase active a la pestaña clickeada
-                this.classList.add('active');
-                
-                // Mostrar el contenido correspondiente
-                const tabId = this.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
+        
+        // Calcular al cargar y al hacer clic
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateWeights();
+            // Ocultar resultados adicionales al cargar
+            document.getElementById('extra-results').style.display = 'none';
+        });
+        
+        document.getElementById('calculate-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            calculateWeights();
         });
     </script>
+   
 </body>
 </html>
