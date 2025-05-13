@@ -1,0 +1,1111 @@
+
+    <title>Generador de Plan de Comidas por Macros</title>
+    <style>
+    :root {
+        --primary-color: #3498db;
+        --primary-dark: #2980b9;
+        --secondary-color: #2c3e50;
+        --light-gray: #f5f5f5;
+        --medium-gray: #e0e0e0;
+        --dark-gray: #072d30;
+        --success-color: #27ae60;
+        --error-color: #e74c3c;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        margin: 0; /* Eliminamos margen para evitar espacio no deseado */
+        padding: 0; /* Eliminamos padding del body */
+        background-color: var(--light-gray);
+        width: 100vw; /* Ocupamos todo el ancho disponible */
+        height: 100vw;
+        box-sizing: border-box; /* Aseguramos que padding no afecte el ancho */
+    }
+    
+    /* Contenedor principal ajustado */
+    .main-content {
+        max-width: 1000px;
+        margin: 0 auto; /* Centramos el contenido */
+        padding: 20px;
+        box-sizing: border-box; /* Aseguramos que el padding no cause overflow */
+        width: 100%;
+    }
+    
+    h1, h2, h3, h4 {
+        color: var(--secondary-color);
+        margin-top: 0;
+    }
+    
+    .container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+        width: 100%;
+        box-sizing: border-box; /* Evitamos desbordamiento por padding */
+    }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-error {
+            border-color: var(--error-color);
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        
+        .meal-plan {
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .day {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .macros-total {
+            background-color: #f1f9fe;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .macros-total p {
+            margin: 5px 0;
+            flex-basis: 48%;
+        }
+        
+        .meal {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .meal:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .meal-macros {
+            font-size: 14px;
+            color: var(--dark-gray);
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .meal-macros strong {
+            margin-right: 5px;
+        }
+        
+        .meal-macros p {
+            margin-right: 15px;
+            margin-bottom: 5px;
+        }
+        
+        .food-item {
+            margin-left: 20px;
+            margin-top: 8px;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .food-item:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+        
+        .shopping-list {
+            columns: 2;
+            column-gap: 30px;
+        }
+        
+        .shopping-category {
+            break-inside: avoid;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .macro-results {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .macro-results h3 {
+            margin-bottom: 10px;
+        }
+        
+        .macro-numbers {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        .macro-number {
+            background-color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: 5px;
+            min-width: 120px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .macro-number p:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .shopping-list {
+                columns: 1;
+            }
+            
+            .macros-total p, .macro-number {
+                flex-basis: 100%;
+            }
+        }
+        
+        .print-btn {
+            background-color: var(--secondary-color);
+            margin-top: 20px;
+        }
+        
+        .print-btn:hover {
+            background-color: #1a252f;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Generador de Plan de Comidas por Macros</h1>
+        <p>Crea un plan de comidas personalizado basado en tus necesidades nutricionales y preferencias dietéticas.</p>
+        
+        <div class="form-container">
+            <h2>Calcula tus macros</h2>
+            <form id="macro-calculator">
+                <div class="form-group">
+                    <label for="height">Estatura (cm)</label>
+                    <input type="number" id="height" name="height" min="100" max="250" required>
+                    <div class="error-message" id="height-error">Por favor ingresa una estatura válida (100-250 cm)</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="weight">Peso (kg)</label>
+                    <input type="number" id="weight" name="weight" min="30" max="200" required>
+                    <div class="error-message" id="weight-error">Por favor ingresa un peso válido (30-200 kg)</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Edad</label>
+                    <input type="number" id="age" name="age" min="15" max="100" required>
+                    <div class="error-message" id="age-error">Por favor ingresa una edad válida (15-100 años)</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gender">Género</label>
+                    <select id="gender" name="gender" required>
+                        <option value="male">Masculino</option>
+                        <option value="female">Femenino</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity">Nivel de actividad</label>
+                    <select id="activity" name="activity" required>
+                        <option value="1.2">Sedentario (poco o ningún ejercicio)</option>
+                        <option value="1.375">Ligero (ejercicio ligero 1-3 días/semana)</option>
+                        <option value="1.55" selected>Moderado (ejercicio moderado 3-5 días/semana)</option>
+                        <option value="1.725">Activo (ejercicio intenso 6-7 días/semana)</option>
+                        <option value="1.9">Muy activo (ejercicio muy intenso y trabajo físico)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="goal">Objetivo</label>
+                    <select id="goal" name="goal" required>
+                        <option value="0.85">Pérdida de peso (15% déficit)</option>
+                        <option value="1" selected>Mantenimiento</option>
+                        <option value="1.15">Aumento de masa muscular (15% superávit)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="diet">Tipo de dieta</label>
+                    <select id="diet" name="diet" required>
+                        <option value="standard">Estándar</option>
+                        <option value="vegetarian">Vegetariana</option>
+                        <option value="vegan">Vegana</option>
+                        <option value="keto">Keto</option>
+                        <option value="low_carb">Baja en carbohidratos</option>
+                        <option value="mediterranean">Mediterránea</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="meals-per-day">Comidas por día</label>
+                    <select id="meals-per-day" name="meals-per-day" required>
+                        <option value="3">3 comidas</option>
+                        <option value="4" selected>4 comidas</option>
+                        <option value="5">5 comidas</option>
+                    </select>
+                </div>
+                
+                <button type="submit">Generar Plan de Comidas</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Generando tu plan de comidas personalizado...</p>
+    </div>
+    
+    <div id="meal-plan-result" class="container meal-plan">
+        <h2>Tu plan de alimentación personalizado</h2>
+        
+        <div class="macro-results">
+            <h3>Recomendación de Macros Diarios</h3>
+            <div class="macro-numbers">
+                <div class="macro-number">
+                    <p>Calorías</p>
+                    <p id="total-calories">0</p>
+                </div>
+                <div class="macro-number">
+                    <p>Proteína</p>
+                    <p id="total-protein">0 g</p>
+                </div>
+                <div class="macro-number">
+                    <p>Carbohidratos</p>
+                    <p id="total-carbs">0 g</p>
+                </div>
+                <div class="macro-number">
+                    <p>Grasas</p>
+                    <p id="total-fat">0 g</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-container">
+            <div class="tab active" data-tab="day1">Día 1</div>
+            <div class="tab" data-tab="day2">Día 2</div>
+            <div class="tab" data-tab="day3">Día 3</div>
+            <div class="tab" data-tab="day4">Día 4</div>
+            <div class="tab" data-tab="day5">Día 5</div>
+        </div>
+        
+        <div class="tab-content active" id="day1">
+            <!-- Contenido del día 1 se generará dinámicamente -->
+        </div>
+        
+        <div class="tab-content" id="day2">
+            <!-- Contenido del día 2 se generará dinámicamente -->
+        </div>
+        
+        <div class="tab-content" id="day3">
+            <!-- Contenido del día 3 se generará dinámicamente -->
+        </div>
+        
+        <div class="tab-content" id="day4">
+            <!-- Contenido del día 4 se generará dinámicamente -->
+        </div>
+        
+        <div class="tab-content" id="day5">
+            <!-- Contenido del día 5 se generará dinámicamente -->
+        </div>
+        
+        <h3>Lista de compras</h3>
+        <div class="shopping-list" id="shopping-list">
+            <!-- Lista de compras se generará dinámicamente -->
+        </div>
+        
+        <button class="print-btn" onclick="window.print()">Imprimir Plan</button>
+    </div>
+
+    <script>
+        // Base de datos de alimentos por tipo de dieta
+        const foodDatabase = {
+            standard: {
+                proteins: [
+                    {name: "Pechuga de pollo", calories: 165, protein: 31, carbs: 0, fat: 3.6, serving: "100g"},
+                    {name: "Salmón", calories: 208, protein: 20, carbs: 0, fat: 13, serving: "100g"},
+                    {name: "Carne magra de res", calories: 250, protein: 26, carbs: 0, fat: 15, serving: "100g"},
+                    {name: "Huevos", calories: 70, protein: 6, carbs: 0.6, fat: 5, serving: "1 huevo"},
+                    {name: "Atún en agua", calories: 100, protein: 22, carbs: 0, fat: 1, serving: "100g"},
+                    {name: "Pavo", calories: 135, protein: 29, carbs: 0, fat: 3, serving: "100g"},
+                    {name: "Queso cottage", calories: 98, protein: 11, carbs: 3.4, fat: 4.3, serving: "100g"}
+                ],
+                carbs: [
+                    {name: "Arroz integral", calories: 111, protein: 2.6, carbs: 23, fat: 0.9, serving: "100g cocido"},
+                    {name: "Quinoa", calories: 120, protein: 4.4, carbs: 21.3, fat: 1.9, serving: "100g cocido"},
+                    {name: "Avena", calories: 68, protein: 2.4, carbs: 12, fat: 1.4, serving: "100g cocido"},
+                    {name: "Pan integral", calories: 69, protein: 3.6, carbs: 12, fat: 1, serving: "1 rebanada"},
+                    {name: "Batata", calories: 86, protein: 1.6, carbs: 20, fat: 0.1, serving: "100g cocido"},
+                    {name: "Pasta integral", calories: 124, protein: 5, carbs: 25, fat: 1, serving: "100g cocido"}
+                ],
+                fats: [
+                    {name: "Aguacate", calories: 160, protein: 2, carbs: 9, fat: 15, serving: "100g"},
+                    {name: "Almendras", calories: 579, protein: 21, carbs: 22, fat: 50, serving: "100g"},
+                    {name: "Mantequilla de maní", calories: 588, protein: 25, carbs: 20, fat: 50, serving: "100g"},
+                    {name: "Aceite de oliva", calories: 884, protein: 0, carbs: 0, fat: 100, serving: "100g"},
+                    {name: "Nueces", calories: 654, protein: 15, carbs: 14, fat: 65, serving: "100g"}
+                ],
+                vegetables: [
+                    {name: "Brócoli", calories: 34, protein: 2.8, carbs: 6.6, fat: 0.4, serving: "100g"},
+                    {name: "Espinaca", calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4, serving: "100g"},
+                    {name: "Zanahorias", calories: 41, protein: 0.9, carbs: 10, fat: 0.2, serving: "100g"},
+                    {name: "Pimientos", calories: 31, protein: 1, carbs: 6, fat: 0.3, serving: "100g"},
+                    {name: "Tomates", calories: 18, protein: 0.9, carbs: 3.9, fat: 0.2, serving: "100g"}
+                ],
+                fruits: [
+                    {name: "Plátano", calories: 89, protein: 1.1, carbs: 22.8, fat: 0.3, serving: "100g"},
+                    {name: "Manzana", calories: 52, protein: 0.3, carbs: 14, fat: 0.2, serving: "100g"},
+                    {name: "Fresas", calories: 32, protein: 0.7, carbs: 7.7, fat: 0.3, serving: "100g"},
+                    {name: "Arándanos", calories: 57, protein: 0.7, carbs: 14.5, fat: 0.3, serving: "100g"},
+                    {name: "Naranja", calories: 47, protein: 0.9, carbs: 11.8, fat: 0.1, serving: "100g"}
+                ]
+            },
+            vegetarian: {
+                proteins: [
+                    {name: "Huevos", calories: 70, protein: 6, carbs: 0.6, fat: 5, serving: "1 huevo"},
+                    {name: "Queso cottage", calories: 98, protein: 11, carbs: 3.4, fat: 4.3, serving: "100g"},
+                    {name: "Griegogurt", calories: 59, protein: 10, carbs: 3.6, fat: 0.4, serving: "100g"},
+                    {name: "Tofu", calories: 76, protein: 8, carbs: 1.9, fat: 4.8, serving: "100g"},
+                    {name: "Tempeh", calories: 193, protein: 19, carbs: 9, fat: 11, serving: "100g"},
+                    {name: "Lentejas", calories: 116, protein: 9, carbs: 20, fat: 0.4, serving: "100g cocido"},
+                    {name: "Quinoa", calories: 120, protein: 4.4, carbs: 21.3, fat: 1.9, serving: "100g cocido"}
+                ],
+                // ... (otros grupos de alimentos similares a standard)
+            },
+            vegan: {
+                proteins: [
+                    {name: "Tofu", calories: 76, protein: 8, carbs: 1.9, fat: 4.8, serving: "100g"},
+                    {name: "Tempeh", calories: 193, protein: 19, carbs: 9, fat: 11, serving: "100g"},
+                    {name: "Lentejas", calories: 116, protein: 9, carbs: 20, fat: 0.4, serving: "100g cocido"},
+                    {name: "Garbanzos", calories: 164, protein: 9, carbs: 27, fat: 2.6, serving: "100g cocido"},
+                    {name: "Seitán", calories: 120, protein: 24, carbs: 4, fat: 1, serving: "100g"},
+                    {name: "Edamame", calories: 122, protein: 11, carbs: 10, fat: 5, serving: "100g cocido"}
+                ],
+                // ... (otros grupos de alimentos)
+            },
+            keto: {
+                proteins: [
+                    {name: "Carne de res", calories: 250, protein: 26, carbs: 0, fat: 15, serving: "100g"},
+                    {name: "Pollo con piel", calories: 239, protein: 27, carbs: 0, fat: 14, serving: "100g"},
+                    {name: "Salmón", calories: 208, protein: 20, carbs: 0, fat: 13, serving: "100g"},
+                    {name: "Huevos", calories: 70, protein: 6, carbs: 0.6, fat: 5, serving: "1 huevo"},
+                    {name: "Queso cheddar", calories: 403, protein: 25, carbs: 1.3, fat: 33, serving: "100g"}
+                ],
+                // ... (otros grupos de alimentos bajos en carbohidratos)
+            },
+            low_carb: {
+                proteins: [
+                    {name: "Pechuga de pollo", calories: 165, protein: 31, carbs: 0, fat: 3.6, serving: "100g"},
+                    {name: "Salmón", calories: 208, protein: 20, carbs: 0, fat: 13, serving: "100g"},
+                    {name: "Huevos", calories: 70, protein: 6, carbs: 0.6, fat: 5, serving: "1 huevo"},
+                    {name: "Tofu", calories: 76, protein: 8, carbs: 1.9, fat: 4.8, serving: "100g"},
+                    {name: "Queso cottage", calories: 98, protein: 11, carbs: 3.4, fat: 4.3, serving: "100g"}
+                ],
+                // ... (otros grupos de alimentos bajos en carbohidratos)
+            },
+            mediterranean: {
+                proteins: [
+                    {name: "Pescado (salmón, atún)", calories: 208, protein: 20, carbs: 0, fat: 13, serving: "100g"},
+                    {name: "Pollo", calories: 165, protein: 31, carbs: 0, fat: 3.6, serving: "100g"},
+                    {name: "Legumbres", calories: 116, protein: 9, carbs: 20, fat: 0.4, serving: "100g cocido"},
+                    {name: "Huevos", calories: 70, protein: 6, carbs: 0.6, fat: 5, serving: "1 huevo"},
+                    {name: "Queso feta", calories: 264, protein: 14, carbs: 4, fat: 21, serving: "100g"}
+                ],
+                // ... (otros grupos de alimentos mediterráneos)
+            }
+        };
+
+        // Función para calcular las necesidades calóricas basadas en la ecuación de Harris-Benedict
+        function calculateCalories(weight, height, age, gender, activity) {
+            let bmr;
+            if (gender === "male") {
+                bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+            } else {
+                bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+            }
+            return Math.round(bmr * activity);
+        }
+
+        // Función para calcular la distribución de macros
+        function calculateMacros(calories, diet) {
+            let protein, carbs, fat;
+            
+            switch(diet) {
+                case "keto":
+                    protein = 0.25;
+                    carbs = 0.05;
+                    fat = 0.70;
+                    break;
+                case "low_carb":
+                    protein = 0.30;
+                    carbs = 0.20;
+                    fat = 0.50;
+                    break;
+                case "standard":
+                case "vegetarian":
+                    protein = 0.30;
+                    carbs = 0.40;
+                    fat = 0.30;
+                    break;
+                case "vegan":
+                    protein = 0.25;
+                    carbs = 0.45;
+                    fat = 0.30;
+                    break;
+                case "mediterranean":
+                    protein = 0.20;
+                    carbs = 0.50;
+                    fat = 0.30;
+                    break;
+                default:
+                    protein = 0.30;
+                    carbs = 0.40;
+                    fat = 0.30;
+            }
+            
+            // Calcular gramos de cada macro
+            const proteinGrams = Math.round((calories * protein) / 4);
+            const carbGrams = Math.round((calories * carbs) / 4);
+            const fatGrams = Math.round((calories * fat) / 9);
+            
+            return {
+                protein: proteinGrams,
+                carbs: carbGrams,
+                fat: fatGrams,
+                calories: Math.round(calories)
+            };
+        }
+
+        // Función para generar un plan de comidas
+        function generateMealPlan(macros, diet, mealsPerDay) {
+            const days = [];
+            const shoppingList = {
+                proteins: new Set(),
+                carbs: new Set(),
+                fats: new Set(),
+                vegetables: new Set(),
+                fruits: new Set()
+            };
+            
+            for (let day = 1; day <= 5; day++) {
+                const dayPlan = {
+                    meals: [],
+                    totals: {calories: 0, protein: 0, carbs: 0, fat: 0}
+                };
+                
+                // Determinar cuántas comidas principales y snacks
+                const mainMeals = Math.min(3, mealsPerDay);
+                const snacks = mealsPerDay - mainMeals;
+                
+                // Distribuir macros entre comidas
+                const mealMacros = {
+                    protein: Math.round(macros.protein / mealsPerDay),
+                    carbs: Math.round(macros.carbs / mealsPerDay),
+                    fat: Math.round(macros.fat / mealsPerDay),
+                    calories: Math.round(macros.calories / mealsPerDay)
+                };
+                
+                // Generar comidas principales
+                const mealNames = ["Desayuno", "Almuerzo", "Cena"];
+                for (let i = 0; i < mainMeals; i++) {
+                    const meal = generateMeal(mealMacros, diet, mealNames[i]);
+                    dayPlan.meals.push(meal);
+                    
+                    // Actualizar totales
+                    dayPlan.totals.calories += meal.calories;
+                    dayPlan.totals.protein += meal.protein;
+                    dayPlan.totals.carbs += meal.carbs;
+                    dayPlan.totals.fat += meal.fat;
+                    
+                    // Agregar a lista de compras
+                    meal.foods.forEach(food => {
+                        const category = getFoodCategory(food.name, diet);
+                        if (category) shoppingList[category].add(food.name);
+                    });
+                }
+                
+                // Generar snacks
+                for (let i = 0; i < snacks; i++) {
+                    const snack = generateSnack(mealMacros, diet);
+                    dayPlan.meals.push(snack);
+                    
+                    // Actualizar totales
+                    dayPlan.totals.calories += snack.calories;
+                    dayPlan.totals.protein += snack.protein;
+                    dayPlan.totals.carbs += snack.carbs;
+                    dayPlan.totals.fat += snack.fat;
+                    
+                    // Agregar a lista de compras
+                    snack.foods.forEach(food => {
+                        const category = getFoodCategory(food.name, diet);
+                        if (category) shoppingList[category].add(food.name);
+                    });
+                }
+                
+                days.push(dayPlan);
+            }
+            
+            return {days, shoppingList};
+        }
+
+        // Función para generar una comida
+        function generateMeal(macros, diet, mealName) {
+            const meal = {
+                name: mealName,
+                foods: [],
+                calories: 0,
+                protein: 0,
+                carbs: 0,
+                fat: 0
+            };
+            
+            const dietFoods = foodDatabase[diet] || foodDatabase.standard;
+            
+            // Seleccionar una proteína
+            const proteinOptions = dietFoods.proteins;
+            const protein = proteinOptions[Math.floor(Math.random() * proteinOptions.length)];
+            const proteinAmount = Math.max(50, Math.min(200, Math.round(macros.protein * 0.7 / protein.protein * 100)));
+            
+            meal.foods.push({
+                name: protein.name,
+                amount: proteinAmount,
+                serving: protein.serving,
+                calories: Math.round(protein.calories * proteinAmount / 100),
+                protein: Math.round(protein.protein * proteinAmount / 100),
+                carbs: Math.round(protein.carbs * proteinAmount / 100),
+                fat: Math.round(protein.fat * proteinAmount / 100)
+            });
+            
+            meal.calories += meal.foods[0].calories;
+            meal.protein += meal.foods[0].protein;
+            meal.carbs += meal.foods[0].carbs;
+            meal.fat += meal.foods[0].fat;
+            
+            // Seleccionar un carbohidrato (excepto para keto)
+            if (diet !== "keto") {
+                const carbOptions = dietFoods.carbs;
+                const carb = carbOptions[Math.floor(Math.random() * carbOptions.length)];
+                const carbAmount = Math.max(50, Math.min(150, Math.round(macros.carbs * 0.7 / carb.carbs * 100)));
+                
+                meal.foods.push({
+                    name: carb.name,
+                    amount: carbAmount,
+                    serving: carb.serving,
+                    calories: Math.round(carb.calories * carbAmount / 100),
+                    protein: Math.round(carb.protein * carbAmount / 100),
+                    carbs: Math.round(carb.carbs * carbAmount / 100),
+                    fat: Math.round(carb.fat * carbAmount / 100)
+                });
+                
+                meal.calories += meal.foods[1].calories;
+                meal.protein += meal.foods[1].protein;
+                meal.carbs += meal.foods[1].carbs;
+                meal.fat += meal.foods[1].fat;
+            }
+            
+            // Seleccionar una grasa
+            const fatOptions = dietFoods.fats;
+            const fat = fatOptions[Math.floor(Math.random() * fatOptions.length)];
+            const fatAmount = Math.max(10, Math.min(50, Math.round(macros.fat * 0.5 / fat.fat * 100)));
+            
+            meal.foods.push({
+                name: fat.name,
+                amount: fatAmount,
+                serving: fat.serving,
+                calories: Math.round(fat.calories * fatAmount / 100),
+                protein: Math.round(fat.protein * fatAmount / 100),
+                carbs: Math.round(fat.carbs * fatAmount / 100),
+                fat: Math.round(fat.fat * fatAmount / 100)
+            });
+            
+            meal.calories += meal.foods[meal.foods.length - 1].calories;
+            meal.protein += meal.foods[meal.foods.length - 1].protein;
+            meal.carbs += meal.foods[meal.foods.length - 1].carbs;
+            meal.fat += meal.foods[meal.foods.length - 1].fat;
+            
+            // Agregar vegetales
+            const vegOptions = dietFoods.vegetables;
+            const veg1 = vegOptions[Math.floor(Math.random() * vegOptions.length)];
+            const veg2 = vegOptions[Math.floor(Math.random() * vegOptions.length)];
+            
+            const vegAmount = 100; // 100g por vegetal
+            
+            meal.foods.push({
+                name: veg1.name,
+                amount: vegAmount,
+                serving: veg1.serving,
+                calories: Math.round(veg1.calories * vegAmount / 100),
+                protein: Math.round(veg1.protein * vegAmount / 100),
+                carbs: Math.round(veg1.carbs * vegAmount / 100),
+                fat: Math.round(veg1.fat * vegAmount / 100)
+            });
+            
+            if (veg1.name !== veg2.name) {
+                meal.foods.push({
+                    name: veg2.name,
+                    amount: vegAmount,
+                    serving: veg2.serving,
+                    calories: Math.round(veg2.calories * vegAmount / 100),
+                    protein: Math.round(veg2.protein * vegAmount / 100),
+                    carbs: Math.round(veg2.carbs * vegAmount / 100),
+                    fat: Math.round(veg2.fat * vegAmount / 100)
+                });
+            }
+            
+            meal.calories += meal.foods[meal.foods.length - 1].calories;
+            meal.protein += meal.foods[meal.foods.length - 1].protein;
+            meal.carbs += meal.foods[meal.foods.length - 1].carbs;
+            meal.fat += meal.foods[meal.foods.length - 1].fat;
+            
+            if (veg1.name !== veg2.name) {
+                meal.calories += meal.foods[meal.foods.length - 2].calories;
+                meal.protein += meal.foods[meal.foods.length - 2].protein;
+                meal.carbs += meal.foods[meal.foods.length - 2].carbs;
+                meal.fat += meal.foods[meal.foods.length - 2].fat;
+            }
+            
+            return meal;
+        }
+
+        // Función para generar un snack
+        function generateSnack(macros, diet) {
+            const snack = {
+                name: "Merienda",
+                foods: [],
+                calories: 0,
+                protein: 0,
+                carbs: 0,
+                fat: 0
+            };
+            
+            const dietFoods = foodDatabase[diet] || foodDatabase.standard;
+            
+            // Para snacks, combinamos una fruta con una proteína o grasa
+            const fruitOptions = dietFoods.fruits;
+            const fruit = fruitOptions[Math.floor(Math.random() * fruitOptions.length)];
+            const fruitAmount = 100; // 100g
+            
+            snack.foods.push({
+                name: fruit.name,
+                amount: fruitAmount,
+                serving: fruit.serving,
+                calories: Math.round(fruit.calories * fruitAmount / 100),
+                protein: Math.round(fruit.protein * fruitAmount / 100),
+                carbs: Math.round(fruit.carbs * fruitAmount / 100),
+                fat: Math.round(fruit.fat * fruitAmount / 100)
+            });
+            
+            snack.calories += snack.foods[0].calories;
+            snack.protein += snack.foods[0].protein;
+            snack.carbs += snack.foods[0].carbs;
+            snack.fat += snack.foods[0].fat;
+            
+            // Agregar una proteína o grasa
+            const addProtein = Math.random() > 0.5;
+            
+            if (addProtein) {
+                const proteinOptions = dietFoods.proteins.filter(p => 
+                    p.name.includes("yogur") || p.name.includes("queso") || p.name.includes("huevo")
+                );
+                
+                if (proteinOptions.length > 0) {
+                    const protein = proteinOptions[Math.floor(Math.random() * proteinOptions.length)];
+                    const proteinAmount = 50; // 50g
+                    
+                    snack.foods.push({
+                        name: protein.name,
+                        amount: proteinAmount,
+                        serving: protein.serving,
+                        calories: Math.round(protein.calories * proteinAmount / 100),
+                        protein: Math.round(protein.protein * proteinAmount / 100),
+                        carbs: Math.round(protein.carbs * proteinAmount / 100),
+                        fat: Math.round(protein.fat * proteinAmount / 100)
+                    });
+                    
+                    snack.calories += snack.foods[1].calories;
+                    snack.protein += snack.foods[1].protein;
+                    snack.carbs += snack.foods[1].carbs;
+                    snack.fat += snack.foods[1].fat;
+                }
+            } else {
+                const fatOptions = dietFoods.fats.filter(f => 
+                    f.name.includes("mantequilla") || f.name.includes("nueces") || f.name.includes("almendras")
+                );
+                
+                if (fatOptions.length > 0) {
+                    const fat = fatOptions[Math.floor(Math.random() * fatOptions.length)];
+                    const fatAmount = 20; // 20g
+                    
+                    snack.foods.push({
+                        name: fat.name,
+                        amount: fatAmount,
+                        serving: fat.serving,
+                        calories: Math.round(fat.calories * fatAmount / 100),
+                        protein: Math.round(fat.protein * fatAmount / 100),
+                        carbs: Math.round(fat.carbs * fatAmount / 100),
+                        fat: Math.round(fat.fat * fatAmount / 100)
+                    });
+                    
+                    snack.calories += snack.foods[1].calories;
+                    snack.protein += snack.foods[1].protein;
+                    snack.carbs += snack.foods[1].carbs;
+                    snack.fat += snack.foods[1].fat;
+                }
+            }
+            
+            return snack;
+        }
+
+        // Función para determinar la categoría de un alimento
+        function getFoodCategory(foodName, diet) {
+            const dietFoods = foodDatabase[diet] || foodDatabase.standard;
+            
+            for (const category in dietFoods) {
+                if (dietFoods[category].some(food => food.name === foodName)) {
+                    return category;
+                }
+            }
+            return null;
+        }
+
+        // Función para renderizar el plan de comidas
+        function renderMealPlan(plan) {
+            // Mostrar macros totales
+            document.getElementById('total-calories').textContent = plan.macros.calories;
+            document.getElementById('total-protein').textContent = plan.macros.protein + ' g';
+            document.getElementById('total-carbs').textContent = plan.macros.carbs + ' g';
+            document.getElementById('total-fat').textContent = plan.macros.fat + ' g';
+            
+            // Renderizar cada día
+            plan.days.forEach((day, index) => {
+                const dayElement = document.getElementById(`day${index + 1}`);
+                dayElement.innerHTML = '';
+                
+                const dayTitle = document.createElement('h3');
+                dayTitle.textContent = `Día ${index + 1}`;
+                dayElement.appendChild(dayTitle);
+                
+                // Totales del día
+                const macrosTotal = document.createElement('div');
+                macrosTotal.className = 'macros-total';
+                macrosTotal.innerHTML = `
+                    <h4>Totales de macronutrientes</h4>
+                    <p><strong>Calorías:</strong> ${day.totals.calories}</p>
+                    <p><strong>Proteína:</strong> ${day.totals.protein} g</p>
+                    <p><strong>Grasa:</strong> ${day.totals.fat} g</p>
+                    <p><strong>Carbohidratos:</strong> ${day.totals.carbs} g</p>
+                `;
+                dayElement.appendChild(macrosTotal);
+                
+                // Comidas del día
+                day.meals.forEach(meal => {
+                    const mealElement = document.createElement('div');
+                    mealElement.className = 'meal';
+                    
+                    const mealTitle = document.createElement('h4');
+                    mealTitle.textContent = meal.name;
+                    mealElement.appendChild(mealTitle);
+                    
+                    const mealMacros = document.createElement('div');
+                    mealMacros.className = 'meal-macros';
+                    mealMacros.innerHTML = `
+                        <p><strong>Calorías:</strong> ${meal.calories}</p>
+                        <p><strong>Proteína:</strong> ${meal.protein} g</p>
+                        <p><strong>Grasa:</strong> ${meal.fat} g</p>
+                        <p><strong>Carbohidratos:</strong> ${meal.carbs} g</p>
+                    `;
+                    mealElement.appendChild(mealMacros);
+                    
+                    // Alimentos de la comida
+                    meal.foods.forEach(food => {
+                        const foodItem = document.createElement('div');
+                        foodItem.className = 'food-item';
+                        foodItem.textContent = `${food.name} - ${food.amount} ${food.serving}`;
+                        mealElement.appendChild(foodItem);
+                    });
+                    
+                    dayElement.appendChild(mealElement);
+                });
+            });
+            
+            // Renderizar lista de compras
+            const shoppingListElement = document.getElementById('shopping-list');
+            shoppingListElement.innerHTML = '';
+            
+            for (const category in plan.shoppingList) {
+                if (plan.shoppingList[category].size > 0) {
+                    const categoryElement = document.createElement('div');
+                    categoryElement.className = 'shopping-category';
+                    
+                    const categoryTitle = document.createElement('h4');
+                    categoryTitle.textContent = getCategoryName(category);
+                    categoryElement.appendChild(categoryTitle);
+                    
+                    plan.shoppingList[category].forEach(item => {
+                        const itemElement = document.createElement('div');
+                        itemElement.className = 'food-item';
+                        itemElement.textContent = item;
+                        categoryElement.appendChild(itemElement);
+                    });
+                    
+                    shoppingListElement.appendChild(categoryElement);
+                }
+            }
+        }
+
+        // Función para obtener el nombre legible de la categoría
+        function getCategoryName(category) {
+            const names = {
+                proteins: 'Proteínas',
+                carbs: 'Carbohidratos',
+                fats: 'Grasas saludables',
+                vegetables: 'Verduras',
+                fruits: 'Frutas'
+            };
+            return names[category] || category;
+        }
+
+        // Función para validar el formulario
+        function validateForm() {
+            let isValid = true;
+            
+            const height = document.getElementById('height');
+            const weight = document.getElementById('weight');
+            const age = document.getElementById('age');
+            
+            const heightError = document.getElementById('height-error');
+            const weightError = document.getElementById('weight-error');
+            const ageError = document.getElementById('age-error');
+            
+            // Validar estatura (100-250 cm)
+            if (height.value < 100 || height.value > 250) {
+                height.classList.add('input-error');
+                heightError.style.display = 'block';
+                isValid = false;
+            } else {
+                height.classList.remove('input-error');
+                heightError.style.display = 'none';
+            }
+            
+            // Validar peso (30-200 kg)
+            if (weight.value < 30 || weight.value > 200) {
+                weight.classList.add('input-error');
+                weightError.style.display = 'block';
+                isValid = false;
+            } else {
+                weight.classList.remove('input-error');
+                weightError.style.display = 'none';
+            }
+            
+            // Validar edad (15-100 años)
+            if (age.value < 15 || age.value > 100) {
+                age.classList.add('input-error');
+                ageError.style.display = 'block';
+                isValid = false;
+            } else {
+                age.classList.remove('input-error');
+                ageError.style.display = 'none';
+            }
+            
+            return isValid;
+        }
+
+        // Manejar el envío del formulario
+        document.getElementById('macro-calculator').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Mostrar loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('meal-plan-result').style.display = 'none';
+            
+            // Obtener valores del formulario
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const age = parseInt(document.getElementById('age').value);
+            const gender = document.getElementById('gender').value;
+            const activity = parseFloat(document.getElementById('activity').value);
+            const goal = parseFloat(document.getElementById('goal').value);
+            const diet = document.getElementById('diet').value;
+            const mealsPerDay = parseInt(document.getElementById('meals-per-day').value);
+            
+            // Calcular necesidades calóricas
+            const maintenanceCalories = calculateCalories(weight, height, age, gender, activity);
+            const goalCalories = Math.round(maintenanceCalories * goal);
+            
+            // Calcular macros
+            const macros = calculateMacros(goalCalories, diet);
+            
+            // Generar plan de comidas
+            const mealPlan = generateMealPlan(macros, diet, mealsPerDay);
+            
+            // Combinar datos para renderizar
+            const planData = {
+                macros: macros,
+                days: mealPlan.days,
+                shoppingList: mealPlan.shoppingList
+            };
+            
+            // Simular tiempo de carga (en producción, esto sería instantáneo)
+            setTimeout(() => {
+                // Ocultar loading y mostrar resultados
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('meal-plan-result').style.display = 'block';
+                
+                // Renderizar plan de comidas
+                renderMealPlan(planData);
+                
+                // Desplazarse a los resultados
+                window.scrollTo({
+                    top: document.getElementById('meal-plan-result').offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            }, 1500);
+        });
+
+        // Manejar pestañas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remover clase active de todas las pestañas y contenidos
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Agregar clase active a la pestaña clickeada
+                this.classList.add('active');
+                
+                // Mostrar el contenido correspondiente
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
